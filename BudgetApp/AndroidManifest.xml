@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -39,12 +39,28 @@
             android:label="@string/title_activity_add_category" >
         </activity>
         <activity
-            android:name="com.example.budgetapp.AddActivity"
+            android:name="com.example.budgetapp.AddInventoryActivity"
             android:label="@string/title_activity_add" >
         </activity>
         <activity
-            android:name="com.example.budgetapp.UpdateActivity"
+            android:name="com.example.budgetapp.UpdateInventoryActivity"
             android:label="@string/title_activity_update" >
+        </activity>
+        <activity
+            android:name="com.example.budgetapp.ShoppingListActivity"
+            android:label="@string/title_activity_shopping_list" >
+        </activity>
+        <activity
+            android:name="com.example.budgetapp.ViewBudgetActivity"
+            android:label="@string/title_activity_view_budget" >
+        </activity>
+        <activity
+            android:name="com.example.budgetapp.EditBudgetActivity"
+            android:label="@string/title_activity_edit_budget" >
+        </activity>
+        <activity
+            android:name="com.example.budgetapp.EditCategoriesActivity"
+            android:label="@string/title_activity_edit_categories" >
         </activity>
     </application>
 
