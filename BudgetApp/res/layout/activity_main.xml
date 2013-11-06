@@ -41,6 +41,7 @@
                 android:id="@+id/btnUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onClickAdd"
                 android:text="Inventory" />
 
             <Button
