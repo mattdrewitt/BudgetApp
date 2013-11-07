@@ -96,53 +96,5 @@ public class DBAdapter {
         DBHelper.close();
     }
 
-    //---insert a contact into the database---
-    /*
-    public long insertContact(String name, String email, int age, int year) 
-    {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_NAME, name);
-        initialValues.put(KEY_EMAIL, email);
-        initialValues.put(KEY_AGE, age);
-        initialValues.put(KEY_YEAR, year);
-        return db.insert(DATABASE_TABLE, null, initialValues);
-    }
-
-    //---deletes a particular contact---
-    public boolean deleteContact(long rowId) 
-    {
-        return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
-    }
-
-    //---retrieves all the contacts---
-    public Cursor getAllContacts()
-    {
-        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NAME,
-                KEY_EMAIL, KEY_AGE, KEY_YEAR}, null, null, null, null, null);
-    }
-
-    //---retrieves a particular contact---
-    public Cursor getContact(long rowId) throws SQLException 
-    {
-        Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                KEY_NAME, KEY_EMAIL,KEY_AGE, KEY_YEAR}, KEY_ROWID + "=" + rowId, null,
-                null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
-
-    //---updates a contact---
-    public boolean updateContact(long rowId, String name, String email,int age, int year) 
-    {
-        ContentValues args = new ContentValues();
-        args.put(KEY_NAME, name);
-        args.put(KEY_EMAIL, email);
-        args.put(KEY_AGE, age);
-        args.put(KEY_YEAR, year);
-        return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
-    }
-*/
+   
 }

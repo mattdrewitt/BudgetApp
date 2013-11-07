@@ -32,7 +32,7 @@ public class BudgetCategory {
 
     //---insert a contact into the database---
     
-    public long insertBudget(String title,String description) 
+    public long insertBudgetCategory(String title,String description) 
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_TITLE, title);
@@ -41,7 +41,7 @@ public class BudgetCategory {
     }
 
     //---deletes a particular contact---
-    public boolean deleteBudget(long rowId) 
+    public boolean deleteBudgetCategory(long rowId) 
     {
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
@@ -54,7 +54,7 @@ public class BudgetCategory {
     }
 
     //---retrieves a particular contact---
-    public Cursor getBudget(long rowId) throws SQLException 
+    public Cursor getBudgetCategory(long rowId) throws SQLException 
     {
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
@@ -67,7 +67,7 @@ public class BudgetCategory {
     }
 
     //---updates a contact---
-    public boolean updateContact(long rowId, String title, String description) 
+    public boolean updateBudgetCategory(long rowId, String title, String description) 
     {
         ContentValues args = new ContentValues();
         args.put(KEY_TITLE, title);
