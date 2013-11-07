@@ -10,5 +10,9 @@
     <string name="title_activity_add_category">AddCategoryActivity</string>
     <string name="title_activity_add">Add Item</string>
     <string name="title_activity_update">UpdateActivity</string>
+    <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="title_activity_view_budget">ViewBudgetActivity</string>
+    <string name="title_activity_edit_budget">EditBudgetActivity</string>
+    <string name="title_activity_edit_categories">EditCategoriesActivity</string>
 
 </resources>
