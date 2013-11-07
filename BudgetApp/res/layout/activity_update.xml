@@ -36,12 +36,19 @@
             android:id="@+id/spinnerUpdateCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/editDesiredQty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" 
+            android:hint="Desired Quantity"/>
       
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:text="Quantity Remaining: " />
+            android:text="% Quantity Remaining: " />
 
         <SeekBar
             android:id="@+id/seekBarQuantity"

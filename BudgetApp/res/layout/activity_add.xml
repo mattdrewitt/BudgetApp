@@ -55,7 +55,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10" 
-                android:hint="Quantity"/>
+                android:hint="Quantity Purchased"/>
+            
+            <EditText
+                android:id="@+id/editQtyDesired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" 
+                android:hint="Quantity Desired"/>
 
             <RadioButton
                 android:id="@+id/radioButton1"
