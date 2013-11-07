@@ -15,21 +15,24 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/btnAdd"
+            android:id="@+id/btnAddInventory"
             android:layout_width="256dp"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="Add" />
 
         <Button
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnUpdateInventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="Update" />
 
         <Button
-            android:id="@+id/btnViewBudget"
+            android:id="@+id/btnViewInventory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:text="View" />
 
     </LinearLayout>
