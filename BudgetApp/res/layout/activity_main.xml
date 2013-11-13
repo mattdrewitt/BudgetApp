@@ -10,47 +10,70 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="288dp"
-            android:layout_height="31dp" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="292dp"
-                android:layout_height="match_parent"
-                android:text="Welcome! Choose what you would like to do:" />
-        </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffffff" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="372dp"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:background="#ffffff">
 
             <Button
                 android:id="@+id/btnBudget"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="30dp"
                 android:onClick="onClick"
-                android:text="Budget" />
+                android:text="BUDGET"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@drawable/white_button"
+                android:gravity="left" 
+                android:drawableLeft="@drawable/ic_action_overflow"/>
 
             <Button
                 android:id="@+id/btnInventory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
                 android:onClick="onClick"
-                android:text="Inventory" />
+                android:text="INVENTORY"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold" 
+                android:background="@drawable/white_button"
+                android:gravity="left"
+                android:drawableLeft="@drawable/ic_action_collection"/>
 
             <Button
                 android:id="@+id/btnShoppingList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:onClick="onClick"
-                android:text="Shopping List" />
+                android:text="SHOPPING LIST"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_storage" />
+
+            <Button
+                android:id="@+id/button1"
+                android:layout_width="171dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_help"
+                android:text="ABOUT"
+                android:textColor="#0794E8"
+                android:gravity="left"
+                android:textSize="25dp" />
 
         </LinearLayout>
     </LinearLayout>

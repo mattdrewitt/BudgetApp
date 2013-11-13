@@ -66,4 +66,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:onClick="onClickBack"
+        android:text="Back" />
+
 </RelativeLayout>
