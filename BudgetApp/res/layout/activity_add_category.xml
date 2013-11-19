@@ -16,7 +16,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewRefill"
             android:layout_width="246dp"
             android:layout_height="wrap_content"
             android:text="Add Category" />

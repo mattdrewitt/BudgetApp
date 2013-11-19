@@ -2,24 +2,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onClickBack"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AddInventoryActivity" >
+    tools:context=".AddActivity" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
         <LinearLayout
-            android:layout_width="220dp"
-            android:layout_height="match_parent"
+            android:layout_width="449dp"
+            android:layout_height="751dp"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="14dp"
-            android:layout_weight="10.90"
             android:orientation="vertical" >
 
             <EditText
@@ -34,55 +36,84 @@
             <EditText
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:hint="Name"/>
+                android:layout_height="wrap_content"
+                android:hint="Name" />
 
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            
+
             <EditText
                 android:id="@+id/editCost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10" 
-                android:hint="Cost $"/>
-            
-                   
+                android:ems="10"
+                android:hint="Cost $" />
+
             <EditText
                 android:id="@+id/editQty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10" 
-                android:hint="Quantity"/>
+                android:ems="10"
+                android:hint="Quantity Purchased" />
 
-            <RadioButton
-                android:id="@+id/radioButton1"
+            <EditText
+                android:id="@+id/editQtyDesired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Quantity Desired" />
+
+            <CheckBox
+                android:id="@+id/checkRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Regular Purchase" />
 
-            <RadioButton
-                android:id="@+id/radioButton2"
+            <CheckBox
+                android:id="@+id/checkService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Service Item" />
+                android:text="Service/Non-Inventory" />
+
+            <TextView
+                android:id="@+id/textViewRefill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refill point %" />
+
+            <SeekBar
+                android:id="@+id/seekBarRefillPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <Spinner
                 android:id="@+id/spinnerPurchaseOccurance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/purchaseOccurance" />
-            
-            <Button
-                android:id="@+id/btnEmpty"
+                android:entries="@array/purchaseOccurance"
+                android:visibility="invisible" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Item" />
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/btnEmpty"
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.70"
+                    android:text="Add Item" />
+
+                <Button
+                    android:id="@+id/btnEmpty"
+                    android:layout_width="131dp"
+                    android:layout_height="wrap_content"
+                    android:text="Back" />
+            </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>

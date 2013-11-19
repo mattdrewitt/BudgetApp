@@ -1,6 +1,6 @@
 package com.example.budgetapp.databaseclasses;
 
-import java.awt.List;
+
 import java.util.ArrayList;
 
 import android.widget.TextView;

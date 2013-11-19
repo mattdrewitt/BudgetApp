@@ -17,13 +17,13 @@ public class DBAdapter {
     static final String KEY_YEAR = "year";
     */
     static final String TAG = "DBAdapter";
-    static final String DATABASE_NAME = "MyDB";
+    static final String DATABASE_NAME = "BudgetAppDB";
     static final int DATABASE_VERSION = 1;
 
     final Context context;
 
     DatabaseHelper DBHelper;
-    SQLiteDatabase db;
+    public SQLiteDatabase exec;
     
     public DBAdapter(Context ctx)
     {
@@ -81,12 +81,21 @@ public class DBAdapter {
             db.execSQL("DROP TABLE IF EXISTS contacts");
             onCreate(db);
         }
+        
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+        	super.onOpen(db);
+        	if(!db.isReadOnly()) {
+        		//Enable foreign keys
+        		db.execSQL("PRAGMA foreign_keys=ON;");
+        	}
+        }
     }
 
     //---opens the database---
     public DBAdapter open() throws SQLException 
     {
-        db = DBHelper.getWritableDatabase();
+    	exec = DBHelper.getWritableDatabase();
         return this;
     }
 

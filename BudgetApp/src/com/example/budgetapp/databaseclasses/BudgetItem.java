@@ -24,12 +24,12 @@ public class BudgetItem {
     
 
     static final String DATABASE_CREATE =
-        "create table BudgetItem (_id integer primary key autoincrement, "
+        "create table budget_item (_id integer primary key autoincrement, "
         + "category_id integer not null, "
         + "budget_id integer not null, "
         + "target_total integer, "
-        + "FOREIGN KEY category_id REFERENCES BudgetCategory _id,"
-        + "FOREIGN KEY budget_id REFERENCES Budget _id);";
+        + "FOREIGN KEY(category_id) REFERENCES budget_category(_id),"
+        + "FOREIGN KEY(budget_id) REFERENCES budget(_id));";
     
     
     SQLiteDatabase db;

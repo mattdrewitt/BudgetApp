@@ -19,9 +19,9 @@ public class PurchaseItem {
     static final int DATABASE_VERSION = 1;
     
     static final String DATABASE_CREATE =
-            "create table PurchaseItem (_id integer primary key autoincrement, "
+            "create table purchase_item (_id integer primary key autoincrement, "
             + "cost_per integer not null, "
             + "qty_purchase integer not null, "
             + "item_id integer, "
-            + "FOREIGN KEY item_id REFERENCES Item _id);";
+            + "FOREIGN KEY(item_id) REFERENCES item(_id));";
 }

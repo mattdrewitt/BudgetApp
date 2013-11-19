@@ -24,8 +24,9 @@ public class BudgetCategory {
     static final int DATABASE_VERSION = 1;
     
     static final String DATABASE_CREATE =
-            "create table BudgetCategory (_id integer primary key autoincrement, "
-            + "title text not null, description text not null);";
+            "create table budget_category (_id integer primary key autoincrement, "
+            + "title text not null, "
+            + "description text not null);";
 
 
     SQLiteDatabase db;

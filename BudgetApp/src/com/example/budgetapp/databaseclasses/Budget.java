@@ -37,7 +37,7 @@ public class Budget {
     }
     
     static final String DATABASE_CREATE =
-            "create table Budget (_id integer primary key autoincrement, "
+            "create table budget (_id integer primary key autoincrement, "
             + "start_date text, end_date text);";
 
     //final Context context;
