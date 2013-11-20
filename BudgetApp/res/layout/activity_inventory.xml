@@ -6,35 +6,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".InventoryActivity" >
+    tools:context=".InventoryActivity" 
+    android:background="#ffffff" >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="#ffffff"  >
 
         <Button
-            android:id="@+id/btnAddInventory"
-            android:layout_width="256dp"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Add" />
+            	android:id="@+id/btnAddInventory"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onClick"
+                android:text="ADD"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_new_event" />
 
         <Button
-            android:id="@+id/btnUpdateInventory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="Update" />
+            	android:id="@+id/btnUpdateInventory"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onClick"
+                android:text="UPDATE"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_upload" />
 
         <Button
             android:id="@+id/btnViewInventory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="View" />
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onClick"
+                android:text="VIEW"
+                android:textColor="#0794E8"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="left"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_storage" />
 
     </LinearLayout>
+
+    <Button
+		        android:id="@+id/button1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentBottom="true"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginRight="14dp"
+		        android:onClick="onClickBack"
+                android:text="BACK TO MAIN"
+                android:textColor="#0794E8"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="@drawable/white_button"
+                android:drawableLeft="@drawable/ic_action_backspace" />
 
 </RelativeLayout>

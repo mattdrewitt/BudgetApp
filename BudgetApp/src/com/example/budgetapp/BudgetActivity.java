@@ -36,5 +36,9 @@ public class BudgetActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	public void onClickBack(View v){
+		onBackPressed();
+	}
 
 }
