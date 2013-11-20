@@ -100,14 +100,15 @@
                 android:layout_height="wrap_content" >
 
                 <Button
-                    android:id="@+id/btnEmpty"
+                    android:id="@+id/btnSaveInventory"
                     android:layout_width="172dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.70"
-                    android:text="Add Item" />
+                    android:text="Add Item"
+                    android:onClick="onClickSave" />
 
                 <Button
-                    android:id="@+id/btnEmpty"
+                    android:id="@+id/btnSaveInventory"
                     android:layout_width="131dp"
                     android:layout_height="wrap_content"
                     android:text="Back" />

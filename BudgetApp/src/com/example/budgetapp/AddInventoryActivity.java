@@ -1,17 +1,21 @@
 package com.example.budgetapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.InventoryItem;
 import com.example.budgetapp.databaseclasses.Item;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnDragListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -22,6 +26,11 @@ import android.widget.TextView;
 public class AddInventoryActivity extends Activity {
 	Item dbItem;
 	InventoryItem dbInventory;
+	BudgetCategory dbCategory;
+	
+	BudgetCategory[] categoryArray;
+	List<String> spinnerList;
+	String[] spinnerArray;
 	
 	TextView textViewRefill;
 	EditText editUpc;
@@ -42,6 +51,8 @@ public class AddInventoryActivity extends Activity {
 		
 		dbItem =  new Item(MainActivity.db);
 		dbInventory = new InventoryItem();
+		dbCategory = new BudgetCategory(MainActivity.db);
+		
 		String upc = "";
 		
 		Bundle extras = getIntent().getExtras();
@@ -66,6 +77,9 @@ public class AddInventoryActivity extends Activity {
 		checkService = (CheckBox)findViewById(R.id.checkService);
 		seekBarRefillPoint = (SeekBar)findViewById(R.id.seekBarRefillPoint);
 		textViewRefill = (TextView)findViewById(R.id.textViewRefill);
+		
+		// Populate Category List
+		initializeCategoryList();
 		
 		editUpc.setOnFocusChangeListener(new OnFocusChangeListener() {
 
@@ -96,6 +110,10 @@ public class AddInventoryActivity extends Activity {
 			checkRegular.setChecked(dbItem.isRegular_purchase());
 			checkService.setChecked(dbItem.isService_non_inventory());
 			
+			seekBarRefillPoint.setMax(100);
+			seekBarRefillPoint.setProgress(dbItem.getRefill_point());
+			textViewRefill.setText("Refill point: " + dbItem.getRefill_point() + "%");
+			
 		} else {
 			seekBarRefillPoint.setMax(100);
 			seekBarRefillPoint.setProgress(100);
@@ -103,7 +121,6 @@ public class AddInventoryActivity extends Activity {
 		}
 		
 		seekBarRefillPoint.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
 			@Override
 			public void onProgressChanged(SeekBar s, int arg1, boolean arg2) {
 				textViewRefill.setText("Refill point: " + s.getProgress() + "%");
@@ -111,16 +128,11 @@ public class AddInventoryActivity extends Activity {
 
 			@Override
 			public void onStartTrackingTouch(SeekBar arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar arg0) {
-				// TODO Auto-generated method stub
-				
 			}
-			
 		});
 		
 		editUpc.setText(upc);
@@ -133,8 +145,45 @@ public class AddInventoryActivity extends Activity {
 		return true;
 	}
 	
-	public void onClickBack(View v){
+	public void initializeCategoryList() {
+		if (dbCategory.getAllCategories()) {
+			categoryArray = dbCategory.getCategoriesList().toArray( new BudgetCategory[ dbCategory.getCategoriesList().size() ] );
+			spinnerList = new ArrayList<String>(); 
+			spinnerList.add("Select a Category...");
+			for(BudgetCategory b : dbCategory.getCategoriesList()) {
+				spinnerList.add(b.getTitle());
+			}
+			
+			spinnerArray = spinnerList.toArray( new String[ spinnerList.size() ] );
+			ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+			spinnerCategory.setAdapter(spinnerArrayAdapter);
+		}
+	}
+	
+	public void onClickBack(View v) {
 		onBackPressed();
+	}
+	
+	public void onClickSave(View v) {
+		if(!editUpc.getText().equals("") && !editName.getText().equals("") && !editCost.getText().equals("") &&
+			!editQty.getText().equals("") && !editQtyDesired.getText().equals("") &&
+			spinnerCategory.getSelectedItemPosition() != 0) {
+			
+			dbItem.setUpc(editUpc.getText().toString());
+			dbItem.setName(editName.getText().toString());
+			dbItem.setQty_desired(Integer.parseInt(editQtyDesired.getText().toString()));
+			dbItem.setPurchase_occurance(spinnerPurchaseOccurance.getSelectedItem().toString());
+			dbItem.setRefill_point(seekBarRefillPoint.getProgress());
+			dbItem.setService_non_inventory(checkService.isChecked());
+			dbItem.setRegular_purchase(checkRegular.isChecked());
+			dbItem.setCategory_id(categoryArray[spinnerCategory.getSelectedItemPosition()-1].getId());
+
+			//dbInventory
+			
+			if(dbCategory.saveCategory()) {
+				Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 }

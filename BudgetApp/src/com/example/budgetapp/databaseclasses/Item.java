@@ -1,5 +1,8 @@
 package com.example.budgetapp.databaseclasses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -17,8 +20,8 @@ public class Item {
 	private boolean service_non_inventory; 
 	private int category_id;
 	private boolean new_item;
+	private List<Item> itemsList;
 
-	
 	private DBAdapter db;
 	
 	static final String KEY_ROWID = "_id";
@@ -53,6 +56,24 @@ public class Item {
     	this.db = adapter;
     	this.new_item = true;
     }
+    
+    public Item(int id, String upc, String name, int qty_desired,
+			int refill_point, String purchase_occurance,
+			boolean regular_purchase, boolean service_non_inventory,
+			int category_id) {
+		this.id = id;
+		this.upc = upc;
+		this.name = name;
+		this.qty_desired = qty_desired;
+		this.refill_point = refill_point;
+		this.purchase_occurance = purchase_occurance;
+		this.regular_purchase = regular_purchase;
+		this.service_non_inventory = service_non_inventory;
+		this.category_id = category_id;
+		this.new_item = new_item;
+		this.db = null;
+		this.new_item = false;
+	}
     
     // Getters/Setters
     public int getId() {
@@ -134,6 +155,14 @@ public class Item {
 	public void setNew_item(boolean new_item) {
 		this.new_item = new_item;
 	}
+	
+	public List<Item> getItemsList() {
+		return itemsList;
+	}
+
+	public void setItemsList(List<Item> itemsList) {
+		this.itemsList = itemsList;
+	}
     
     
 	//---find an item by upc, or set the item to a new item with this upc
@@ -209,13 +238,26 @@ public class Item {
     }
     
     //---retrieves all the items---
-    public Cursor getAllItems()
+    public boolean getAllItems()
     {
     	db.open();
-        Cursor c = db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_UPC,
+        Cursor mCursor = db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_UPC,
                 KEY_NAME, KEY_QTY_DESIRED, KEY_REFILL_POINT, KEY_PURCHASE_OCCURANCE, KEY_REGULAR_PURCHASE,
                 KEY_SERVICE, KEY_CATEGORY_ID}, null, null, null, null, null);
+        if (mCursor != null && mCursor.getCount() > 0) {
+        	mCursor.moveToFirst();
+	        itemsList = new ArrayList<Item>();
+	        
+			do {
+				Item b = new Item(mCursor.getInt(0), mCursor.getString(1), mCursor.getString(2), mCursor.getInt(3), 
+								mCursor.getInt(4), mCursor.getString(5), mCursor.getInt(6) == 1 ? true : false, 
+								mCursor.getInt(7) == 1 ? true : false, mCursor.getInt(8));
+				itemsList.add(b);				
+			} while(mCursor.moveToNext());
+        } else {
+        	return false;
+        }
         db.close();
-        return c;
+        return true;
     }
 }
