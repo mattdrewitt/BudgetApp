@@ -6,21 +6,79 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".EditCategoriesActivity" >
+    tools:context=".AddCategoryActivity" >
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/spinnerExistingCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnNewCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="268dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:text="Category Name: " />
+
+            <EditText
+                android:id="@+id/editCategoryName"
+                android:layout_width="154dp"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:text="Description: " />
+
+            <EditText
+                android:id="@+id/editCategoryDescription"
+                android:layout_width="197dp"
+                android:layout_height="103dp"
+                android:ems="10" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSaveCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickSave"
+            android:text="Add" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="19dp"
-        android:layout_marginRight="14dp"
+        android:layout_alignRight="@+id/linearLayout1"
         android:onClick="onClickBack"
         android:text="Back" />
 

@@ -189,7 +189,7 @@ public class Item {
 	        
 	        return true;
     	} else {
-    		// Update exisiting record
+    		// Update exisSting record
     		ContentValues args = new ContentValues();
     		args.put(KEY_UPC, upc);
     		args.put(KEY_NAME, name);

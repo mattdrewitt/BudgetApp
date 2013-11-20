@@ -12,7 +12,9 @@ public class BudgetCategory {
 	private int id;
 	private String title;
 	private String description;
+	private boolean new_cat;
 	
+	private DBAdapter db;
 	
 	static final String KEY_ROWID = "_id";
     static final String KEY_TITLE = "title";
@@ -29,51 +31,101 @@ public class BudgetCategory {
             + "description text not null);";
 
 
-    SQLiteDatabase db;
+    public BudgetCategory(DBAdapter adapter) {
+    	this.db = adapter;
+    	this.new_cat = true;
+    }
+    
+    // Getters/Setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+    
 
     //---insert a contact into the database---
     
-    public long insertBudgetCategory(String title,String description) 
+    public boolean saveCategory() 
     {
-        ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_DESC, description);
-        return db.insert(DATABASE_TABLE, null, initialValues);
-    }
-
-    //---deletes a particular contact---
-    public boolean deleteBudgetCategory(long rowId) 
-    {
-        return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
+    	if(new_cat == true) {
+    		// Insert new record
+    		ContentValues initialValues = new ContentValues();
+    		initialValues.put(KEY_TITLE, title);
+    	    initialValues.put(KEY_DESC, description);
+	        
+	        db.open();
+	        db.exec.insert(DATABASE_TABLE, null, initialValues);
+	        db.close();
+	        new_cat = false;
+	        
+	        return true;
+    	} else {
+    		// Update existing record
+    		ContentValues args = new ContentValues();
+    		args.put(KEY_TITLE, title);
+    		args.put(KEY_DESC, description);
+            
+	        db.open();
+	        db.exec.update(DATABASE_TABLE, args, KEY_ROWID + "=" + id, null);
+	        db.close();
+	        
+            return true;
+    	}
     }
 
     //---retrieves all the contacts---
-    public Cursor getAllBudgets()
+    public Cursor getAllCategories()
     {
-        return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
+    	db.open();
+        Cursor c = db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
         		KEY_DESC}, null, null, null, null, null);
+        db.close();
+        
+        return c;
     }
 
     //---retrieves a particular contact---
-    public Cursor getBudgetCategory(long rowId) throws SQLException 
+    public boolean getBudgetCategory(long rowId) throws SQLException 
     {
+    	db.open();
         Cursor mCursor =
-                db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+                db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
                 		KEY_TITLE, KEY_DESC}, KEY_ROWID + "=" + rowId, null,
                 null, null, null, null);
-        if (mCursor != null) {
+        if (mCursor != null && mCursor.getCount() > 0) {
             mCursor.moveToFirst();
+            id = mCursor.getInt(0);
+            title = mCursor.getString(1);
+            description = mCursor.getString(2);
+            
+            new_cat = false;
+        } else {
+        	new_cat = true;
+        	
+        	db.close();
+        	return false;
         }
-        return mCursor;
-    }
-
-    //---updates a contact---
-    public boolean updateBudgetCategory(long rowId, String title, String description) 
-    {
-        ContentValues args = new ContentValues();
-        args.put(KEY_TITLE, title);
-        args.put(KEY_DESC, description);
-        return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
-    }
-    
+        db.close();
+        
+        return true;
+    }    
 }
