@@ -1,5 +1,7 @@
 package com.example.budgetapp.databaseclasses;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -13,7 +15,7 @@ public class BudgetCategory {
 	private String title;
 	private String description;
 	private boolean new_cat;
-	
+	private List<BudgetCategory> categoriesList;
 	private DBAdapter db;
 	
 	static final String KEY_ROWID = "_id";
@@ -34,6 +36,14 @@ public class BudgetCategory {
     public BudgetCategory(DBAdapter adapter) {
     	this.db = adapter;
     	this.new_cat = true;
+    }
+    
+    public BudgetCategory(int i, String t, String d) {
+    	this.db = null;
+    	this.id = i;
+    	this.title = t;
+    	this.description = d;
+    	this.new_cat = false;
     }
     
     // Getters/Setters
@@ -59,6 +69,18 @@ public class BudgetCategory {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<BudgetCategory> getCategoriesList() {
+		return categoriesList;
+	}
+	
+	public boolean isNew_cat() {
+		return new_cat;
+	}
+
+	public void setNew_cat(boolean new_cat) {
+		this.new_cat = new_cat;
 	}
     
 
@@ -93,17 +115,28 @@ public class BudgetCategory {
     }
 
     //---retrieves all the contacts---
-    public Cursor getAllCategories()
+    public boolean getAllCategories()
     {
     	db.open();
-        Cursor c = db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
+        Cursor mCursor = db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
         		KEY_DESC}, null, null, null, null, null);
+        if (mCursor != null && mCursor.getCount() > 0) {
+        	mCursor.moveToFirst();
+	        categoriesList = new ArrayList<BudgetCategory>();
+	        
+			do {
+				BudgetCategory b = new BudgetCategory(mCursor.getInt(0), mCursor.getString(1), mCursor.getString(2));
+				categoriesList.add(b);				
+			} while(mCursor.moveToNext());
+        } else {
+        	return false;
+        }
         db.close();
         
-        return c;
+        return true;
     }
 
-    //---retrieves a particular contact---
+	//---retrieves a particular contact---
     public boolean getBudgetCategory(long rowId) throws SQLException 
     {
     	db.open();
