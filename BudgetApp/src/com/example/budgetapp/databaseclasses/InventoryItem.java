@@ -176,6 +176,8 @@ public class InventoryItem {
 				itemsList.add(i);				
 			} while(mCursor.moveToNext());
         } else {
+        	db.close();
+        	
         	return false;
         }
         db.close();
@@ -186,7 +188,7 @@ public class InventoryItem {
     	Item item;
     	db.open();
         Cursor mCursor =
-                db.exec.query(true, DATABASE_TABLE, new String[] {Item.KEY_ROWID, Item.KEY_UPC,
+                db.exec.query(true, Item.DATABASE_TABLE, new String[] {Item.KEY_ROWID, Item.KEY_UPC,
                 Item.KEY_NAME, Item.KEY_QTY_DESIRED, Item.KEY_REFILL_POINT, Item.KEY_PURCHASE_OCCURANCE, Item.KEY_REGULAR_PURCHASE,
                 Item.KEY_SERVICE, Item.KEY_CATEGORY_ID}, Item.KEY_ROWID + "='" + this.item_id + "'", null,
                 null, null, null, null);
@@ -200,7 +202,9 @@ public class InventoryItem {
         } else {
         	item = new Item(MainActivity.db);
         }
-
+        
+        db.close();
+        
         return item;
     }
 }

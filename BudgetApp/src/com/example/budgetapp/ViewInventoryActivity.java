@@ -32,7 +32,7 @@ public class ViewInventoryActivity extends Activity {
 			String[] item_list = inventoryList.toArray( new String[ inventoryList.size() ] );
 			
 			ArrayAdapter<String> inventoryAdapter = new ArrayAdapter<String>(
-	                null, android.R.layout.simple_list_item_1, item_list);
+	                this, android.R.layout.simple_list_item_1, item_list);
 			listInventoryItems.setAdapter(inventoryAdapter);
 		}
 		

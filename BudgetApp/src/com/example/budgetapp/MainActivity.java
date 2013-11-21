@@ -35,12 +35,6 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		// This will either initialize the budget, or get the current to ensure we have one created
 		dbBudget.getCurrentBudget();
-		
-		InventoryItem dbInventory = new InventoryItem(db);
-		dbInventory.setItem_id(1);
-		dbInventory.setPercent_remaining(100);
-		dbInventory.setQoh(3);
-		dbInventory.saveItem();
 	}
 
 	public void CopyDB(InputStream inputStream, 
