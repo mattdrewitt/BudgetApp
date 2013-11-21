@@ -126,9 +126,11 @@ public class AddInventoryActivity extends Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton c, boolean arg1) {
 				if(c.isChecked()) {
-					spinnerPurchaseOccurance.setVisibility(1);
+					spinnerPurchaseOccurance.setVisibility(View.VISIBLE);
+					editQtyDesired.setVisibility(View.VISIBLE);
 				} else {
-					spinnerPurchaseOccurance.setVisibility(-1);
+					spinnerPurchaseOccurance.setVisibility(View.GONE);
+					editQtyDesired.setVisibility(View.GONE);
 				}
 					
 			}
@@ -204,8 +206,9 @@ public class AddInventoryActivity extends Activity {
 	}
 	
 	public void onClickSave(View v) {
-		if(!editUpc.getText().equals("") && !editName.getText().equals("") && !editCost.getText().equals("") &&
-			!editQty.getText().equals("") && !editQtyDesired.getText().equals("") &&
+		// Save if all the fields are filled out
+		if(!editUpc.getText().toString().equals("") && !editName.getText().toString().equals("") && !editCost.getText().toString().equals("") &&
+			!editQty.getText().toString().equals("") && !editQtyDesired.getText().toString().equals("") &&
 			spinnerCategory.getSelectedItemPosition() != 0) {
 			
 			dbItem.setUpc(editUpc.getText().toString());
@@ -225,7 +228,27 @@ public class AddInventoryActivity extends Activity {
 				dbInventory.setPercent_remaining(100);
 				dbInventory.setQoh(dbInventory.getQoh() + Integer.parseInt(editQty.getText().toString()));
 				
-				if(dbInventory.saveItem()) {
+				if(!dbItem.isService_non_inventory()) {
+					if(dbInventory.saveItem()) {
+						Budget dbBudget = new Budget(MainActivity.db);
+						dbBudget.getCurrentBudget();
+						
+						dbPurchase.setBudget_id(dbBudget.getId());
+						dbPurchase.setCost_per(Double.parseDouble(editCost.getText().toString()));
+						dbPurchase.setItem_id(dbItem.getId());
+						dbPurchase.setQty_purchased(Integer.parseInt(editQty.getText().toString()));
+						
+						if(dbPurchase.saveItem()) {
+							// Yay it worked, go back to the inventory screen!
+							Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+							onBackPressed();
+						} else {
+							Toast.makeText(this, "Purchase failed to save!", Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						Toast.makeText(this, "Inventory Item failed to save!", Toast.LENGTH_SHORT).show();
+					}
+				} else {
 					Budget dbBudget = new Budget(MainActivity.db);
 					dbBudget.getCurrentBudget();
 					
@@ -241,13 +264,32 @@ public class AddInventoryActivity extends Activity {
 					} else {
 						Toast.makeText(this, "Purchase failed to save!", Toast.LENGTH_SHORT).show();
 					}
-				} else {
-					Toast.makeText(this, "Inventory Item failed to save!", Toast.LENGTH_SHORT).show();
 				}
 				
 			} else {
 				Toast.makeText(this, "Item failed to save!", Toast.LENGTH_SHORT).show();
 			}
+		} else {
+			String errors = "Please fill in the following fields:\n";
+			if(editUpc.getText().toString().equals("")) {
+				errors += "- UPC\n";
+			}
+			if(editName.getText().toString().equals("")) {
+				errors += "- Name\n";
+			}
+			if(spinnerCategory.getSelectedItemPosition() == 0) {
+				errors += "- Category\n";
+			}
+			if(editCost.getText().toString().equals("")) {
+				errors += "- Cost\n";
+			}
+			if(editQty.getText().toString().equals("")) {
+				errors += "- QTY Purchased\n";
+			}
+			if(checkRegular.isChecked() && editQtyDesired.getText().toString().equals("")) {
+				errors += "- QTY Desired\n";
+			}
+			Toast.makeText(this, errors, Toast.LENGTH_LONG).show();
 		}
 	}
 

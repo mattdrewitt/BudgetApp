@@ -33,7 +33,7 @@ public class InventoryItem {
             "create table inventory_item (_id integer primary key autoincrement, "
             + "item_id integer not null, "
             + "qoh integer not null, "
-            + "percent_remaining integer, "
+            + "percent_remaining integer not null, "
             + "FOREIGN KEY(item_id) REFERENCES item(_id));";
     
     // Constructors

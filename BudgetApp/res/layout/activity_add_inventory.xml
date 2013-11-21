@@ -64,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Quantity Desired" />
+                android:hint="Quantity Desired"
+                android:visibility="gone" />
 
             <CheckBox
                 android:id="@+id/checkRegular"
@@ -94,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/purchaseOccurance"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
