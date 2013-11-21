@@ -50,7 +50,7 @@ public class AddInventoryActivity extends Activity {
 		setContentView(R.layout.activity_add_inventory);
 		
 		dbItem =  new Item(MainActivity.db);
-		dbInventory = new InventoryItem();
+		dbInventory = new InventoryItem(MainActivity.db);
 		dbCategory = new BudgetCategory(MainActivity.db);
 		
 		String upc = "";
@@ -177,10 +177,15 @@ public class AddInventoryActivity extends Activity {
 			dbItem.setService_non_inventory(checkService.isChecked());
 			dbItem.setRegular_purchase(checkRegular.isChecked());
 			dbItem.setCategory_id(categoryArray[spinnerCategory.getSelectedItemPosition()-1].getId());
-
-			//dbInventory
 			
-			if(dbCategory.saveCategory()) {
+			if(dbItem.saveItem()) {
+				dbInventory.setItem_id(dbItem.getId());
+				dbInventory.setPercent_remaining(100);
+				dbInventory.setQoh(Integer.parseInt(editQty.getText().toString()));
+				
+				if(dbInventory.saveItem()) {
+					
+				}
 				Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
 			}
 		}
