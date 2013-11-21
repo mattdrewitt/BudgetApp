@@ -95,6 +95,8 @@ public class Budget {
     
     public boolean getCurrentBudget() throws SQLException { 	
     	Pair<String, String> currentMonth = getDateRange();
+    	db.open();
+    	
     	Cursor mCursor =
     			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
     					KEY_START_DATE, KEY_END_DATE}, 
@@ -103,30 +105,37 @@ public class Budget {
     					null, null, null, null, null);
     	
     	if (mCursor != null && mCursor.getCount() > 0) {
-          mCursor.moveToFirst();
+    		mCursor.moveToFirst();
           
-          id = mCursor.getInt(0);
-          try {
-        	  start_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(1));
-        	  end_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(2));
-          } catch (Exception ex) {
-        	  System.out.println("Error while parsing dates: " + ex.getMessage());
-          }
-          
-      } else {
-    	  initializeBudget();
-      }
+          	id = mCursor.getInt(0);
+          	try {
+        	  	start_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(1));
+        	  	end_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(2));
+          	} catch (Exception ex) {
+        	  	System.out.println("Error while parsing dates: " + ex.getMessage());
+          	}
+          	
+          	db.close();
+    	} else {
+    		db.close();
+    		
+    	  	initializeBudget();
+      	}
     	
     	return true;
     }
     
     public boolean initializeBudget() throws SQLException {
+    	db.open();
+    	
     	Pair<String, String> currentMonth = getDateRange();
     	ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_START_DATE, currentMonth.first);
         initialValues.put(KEY_END_DATE, currentMonth.second);
         db.exec.insert(DATABASE_TABLE, null, initialValues);
     	
+        db.close();
+        
     	return true;
     }
     

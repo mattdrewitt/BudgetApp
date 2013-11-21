@@ -1,14 +1,18 @@
 package com.example.budgetapp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.example.budgetapp.databaseclasses.Budget;
 import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.InventoryItem;
 import com.example.budgetapp.databaseclasses.Item;
+import com.example.budgetapp.databaseclasses.PurchaseItem;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
@@ -28,6 +32,7 @@ public class AddInventoryActivity extends Activity {
 	Item dbItem;
 	InventoryItem dbInventory;
 	BudgetCategory dbCategory;
+	PurchaseItem dbPurchase;
 	
 	BudgetCategory[] categoryArray;
 	List<String> spinnerList;
@@ -50,20 +55,11 @@ public class AddInventoryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_inventory);
 		
+		// Initialize DB items
 		dbItem =  new Item(MainActivity.db);
 		dbInventory = new InventoryItem(MainActivity.db);
 		dbCategory = new BudgetCategory(MainActivity.db);
-		
-		String upc = "";
-		
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-		    upc = extras.getString("upc");
-		}
-		
-		if(upc != "") {
-			dbItem.getItemByUpc(upc);
-		}
+		dbPurchase = new PurchaseItem(MainActivity.db);
 		
 		// Setup ui element objects
 		editUpc = (EditText)findViewById(R.id.editUpc);
@@ -87,12 +83,41 @@ public class AddInventoryActivity extends Activity {
 		// Populate Category List
 		initializeCategoryList();
 		
+		// Get the UPC if it was sent to us
+		String upc = "";
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+		    upc = extras.getString("upc");
+		}
+		
+		if(upc != "") {
+			dbItem.getItemByUpc(upc);
+			
+			if (!dbItem.isNew_item()) {
+				displayItem();
+				dbInventory.getInventoryByItemId(dbItem.getId());
+			} else {
+				seekBarRefillPoint.setMax(100);
+				seekBarRefillPoint.setProgress(100);
+				textViewRefill.setText("Refill point: 100%");
+			}
+		}
+		
 		editUpc.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
-				if(!hasFocus && !editUpc.getText().equals("") )
+				if(!hasFocus && !editUpc.getText().toString().equals("")) {
 					dbItem.getItemByUpc(editUpc.getText().toString());
+					if (!dbItem.isNew_item()) {
+						displayItem();
+					} else {
+						//displayItem();
+						seekBarRefillPoint.setMax(100);
+						seekBarRefillPoint.setProgress(100);
+						textViewRefill.setText("Refill point: 100%");
+					}
+				}
 			}
 			
 		});
@@ -108,23 +133,6 @@ public class AddInventoryActivity extends Activity {
 					
 			}
 		});
-		
-		if (!dbItem.isNew_item()) {
-			editName.setText(dbItem.getName());
-			// Set category stuff
-			editQtyDesired.setText(dbItem.getQty_desired());
-			checkRegular.setChecked(dbItem.isRegular_purchase());
-			checkService.setChecked(dbItem.isService_non_inventory());
-			
-			seekBarRefillPoint.setMax(100);
-			seekBarRefillPoint.setProgress(dbItem.getRefill_point());
-			textViewRefill.setText("Refill point: " + dbItem.getRefill_point() + "%");
-			
-		} else {
-			seekBarRefillPoint.setMax(100);
-			seekBarRefillPoint.setProgress(100);
-			textViewRefill.setText("Refill point: 100%");
-		}
 		
 		seekBarRefillPoint.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
@@ -166,6 +174,31 @@ public class AddInventoryActivity extends Activity {
 		}
 	}
 	
+	public void displayItem() {
+		editName.setText(dbItem.getName());
+		
+		editQtyDesired.setText(String.valueOf(dbItem.getQty_desired()));
+		checkRegular.setChecked(dbItem.isRegular_purchase());
+		checkService.setChecked(dbItem.isService_non_inventory());
+		
+		// Set occurance spinner to proper position
+		Resources res = getResources();
+		String[] occurance = res.getStringArray(R.array.purchaseOccurance);
+		spinnerPurchaseOccurance.setSelection(Arrays.asList(occurance).indexOf(dbItem.getPurchase_occurance()));
+		
+		// Set category spinner to proper position
+		List<Integer> categoryIds = new ArrayList<Integer>(); 
+		categoryIds.add(0);
+		for(BudgetCategory b : dbCategory.getCategoriesList()) {
+			categoryIds.add(b.getId());
+		}
+		spinnerCategory.setSelection(categoryIds.indexOf(dbItem.getCategory_id()));
+		
+		seekBarRefillPoint.setMax(100);
+		seekBarRefillPoint.setProgress(dbItem.getRefill_point());
+		textViewRefill.setText("Refill point: " + dbItem.getRefill_point() + "%");
+	}
+	
 	public void onClickBack(View v) {
 		onBackPressed();
 	}
@@ -190,14 +223,30 @@ public class AddInventoryActivity extends Activity {
 			if(dbItem.saveItem()) {
 				dbInventory.setItem_id(dbItem.getId());
 				dbInventory.setPercent_remaining(100);
-				dbInventory.setQoh(Integer.parseInt(editQty.getText().toString()));
-				
+				dbInventory.setQoh(dbInventory.getQoh() + Integer.parseInt(editQty.getText().toString()));
 				
 				if(dbInventory.saveItem()) {
-					Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
-					onBackPressed();
+					Budget dbBudget = new Budget(MainActivity.db);
+					dbBudget.getCurrentBudget();
+					
+					dbPurchase.setBudget_id(dbBudget.getId());
+					dbPurchase.setCost_per(Double.parseDouble(editCost.getText().toString()));
+					dbPurchase.setItem_id(dbItem.getId());
+					dbPurchase.setQty_purchased(Integer.parseInt(editQty.getText().toString()));
+					
+					if(dbPurchase.saveItem()) {
+						// Yay it worked, go back to the inventory screen!
+						Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+						onBackPressed();
+					} else {
+						Toast.makeText(this, "Purchase failed to save!", Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(this, "Inventory Item failed to save!", Toast.LENGTH_SHORT).show();
 				}
 				
+			} else {
+				Toast.makeText(this, "Item failed to save!", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

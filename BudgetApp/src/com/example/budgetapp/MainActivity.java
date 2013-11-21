@@ -10,6 +10,7 @@ import java.util.Date;
 
 import com.example.budgetapp.databaseclasses.Budget;
 import com.example.budgetapp.databaseclasses.DBAdapter;
+import com.example.budgetapp.databaseclasses.Item;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,7 +32,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		Budget dbBudget = new Budget(db);
 		
-		// if there is no current budget then create one
+		// This will either initialize the budget, or get the current to ensure we have one created
 		dbBudget.getCurrentBudget();
 	}
 

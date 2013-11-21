@@ -106,35 +106,33 @@ public class InventoryItem {
 	}
     
 	//---find an item by upc, or set the item to a new item with this upc
-//    public boolean getItemByUpc(String find_upc) throws SQLException 
-//    {
-//    	db.open();
-//        Cursor mCursor =
-//                db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_UPC,
-//                KEY_NAME, KEY_QTY_DESIRED, KEY_REFILL_POINT, KEY_PURCHASE_OCCURANCE, KEY_REGULAR_PURCHASE,
-//                KEY_SERVICE, KEY_CATEGORY_ID}, KEY_UPC + "='" + find_upc + "'", null,
-//                null, null, null, null);
-//        
-//        if (mCursor != null && mCursor.getCount() > 0) {
-//            mCursor.moveToFirst();
-//            
-//            id = mCursor.getInt(0);
-//            item_id = mCursor.getInt(1);
-//            qoh = mCursor.getInt(2);
-//            percent_remaining = mCursor.getInt(3);
-//            
-//            new_item = false;
-//        } else {
-//        	upc = find_upc;
-//        	new_item = true;
-//        }
-//        db.close();
-//        
-//        return true;
-//    }
+    public boolean getInventoryByItemId(int item_id) throws SQLException 
+    {
+    	db.open();
+        Cursor mCursor =
+                db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ITEM_ID, 
+					KEY_QOH, KEY_PERCENT_REMAINING}, KEY_ITEM_ID + "='" + item_id + "'", null,
+                null, null, null, null);
+        
+        if (mCursor != null && mCursor.getCount() > 0) {
+            mCursor.moveToFirst();
+            
+            id = mCursor.getInt(0);
+            item_id = mCursor.getInt(1);
+            qoh = mCursor.getInt(2);
+            percent_remaining = mCursor.getInt(3);
+            
+            new_item = false;
+        } else {
+        	new_item = true;
+        }
+        db.close();
+        
+        return true;
+    }
     
     //---inserts or updates the item, depending on if it is a new record or not---
-    public boolean saveItem() {
+	public boolean saveItem() {
     	if(new_item == true) {
     		// Insert new record
     		ContentValues initialValues = new ContentValues();
