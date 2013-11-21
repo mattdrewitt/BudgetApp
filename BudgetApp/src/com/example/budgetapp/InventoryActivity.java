@@ -69,6 +69,8 @@ public class InventoryActivity extends Activity implements OnClickListener {
 			
 			// Set int for button tracking
 			buttonClicked = v.getId();
+		} else if(v.getId() == R.id.btnViewInventory) {
+			startActivity(new Intent(this, ViewInventoryActivity.class));
 		}
 	}
 	

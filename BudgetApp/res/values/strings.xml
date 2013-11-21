@@ -14,5 +14,6 @@
     <string name="title_activity_view_budget">ViewBudgetActivity</string>
     <string name="title_activity_edit_budget">EditBudgetActivity</string>
     <string name="title_activity_edit_categories">EditCategoriesActivity</string>
+    <string name="title_activity_view_inventory">ViewInventoryActivity</string>
 
 </resources>

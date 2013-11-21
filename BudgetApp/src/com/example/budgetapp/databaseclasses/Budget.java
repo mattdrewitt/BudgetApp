@@ -1,7 +1,9 @@
 package com.example.budgetapp.databaseclasses;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import android.content.ContentValues;
@@ -10,6 +12,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.format.DateFormat;
+import android.util.Pair;
 
 
 public class Budget {
@@ -17,6 +20,7 @@ public class Budget {
 	private int id;
 	private Date start_date;
 	private Date end_date;
+	private DBAdapter db;
 	
 	static final String KEY_ROWID = "_id";
     static final String KEY_START_DATE = "start_date";
@@ -26,6 +30,36 @@ public class Budget {
     static final String DATABASE_NAME = "BudgetAppDB";
     static final String DATABASE_TABLE = "budget";
     static final int DATABASE_VERSION = 1;
+    
+    // Constructors
+    public Budget(DBAdapter adapter) {
+    	this.db = adapter;
+    }
+    
+    // Getters/Setters
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getStart_date() {
+		return start_date;
+	}
+
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+
+	public Date getEnd_date() {
+		return end_date;
+	}
+
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
     
     
     private String formatDate(Date d){
@@ -39,58 +73,85 @@ public class Budget {
     static final String DATABASE_CREATE =
             "create table budget (_id integer primary key autoincrement, "
             + "start_date text, end_date text);";
-
-    //final Context context;
-
-   SQLiteDatabase db;
-
-   //---insert a contact into the database---
-   
-   public long insertBudget(Date startDate, Date endDate) 
-   {
-       ContentValues initialValues = new ContentValues();
-       initialValues.put(KEY_START_DATE, formatDate(startDate));
-       initialValues.put(KEY_END_DATE, formatDate(endDate));
-       return db.insert(DATABASE_TABLE, null, initialValues);
-   }
-
-   //---deletes a particular contact---
-   public boolean deleteBudget(long rowId) 
-   {
-       return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
-   }
-
+    
    //---retrieves all the contacts---
-   public Cursor getAllBudgets()
-   {
-       return db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_START_DATE,
-               KEY_END_DATE}, null, null, null, null, null);
-   }
+    public Cursor getAllBudgets()
+    {
+    	return db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_START_DATE,
+    			KEY_END_DATE}, null, null, null, null, null);
+    }
 
-   //---retrieves a particular contact---
-   public Cursor getBudget(long rowId) throws SQLException 
-   {
-       Cursor mCursor =
-               db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-               KEY_START_DATE, KEY_END_DATE}, KEY_ROWID + "=" + rowId, null,
-               null, null, null, null);
-       if (mCursor != null) {
-           mCursor.moveToFirst();
-       }
-       return mCursor;
-   }
+    //---retrieves a particular contact---
+    public Cursor getBudget(long rowId) throws SQLException {
+    	Cursor mCursor =
+    			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+    					KEY_START_DATE, KEY_END_DATE}, KEY_ROWID + "=" + rowId, null,
+    					null, null, null, null);
+    	if (mCursor != null) {
+    		mCursor.moveToFirst();
+    	}
+    	return mCursor;
+    }
+    
+    public boolean getCurrentBudget() throws SQLException { 	
+    	Pair<String, String> currentMonth = getDateRange();
+    	Cursor mCursor =
+    			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+    					KEY_START_DATE, KEY_END_DATE}, 
+    					KEY_START_DATE + "='" + currentMonth.first + "' AND " + 
+    					KEY_END_DATE + "='" + currentMonth.second + "'", 
+    					null, null, null, null, null);
+    	
+    	if (mCursor != null && mCursor.getCount() > 0) {
+          mCursor.moveToFirst();
+          
+          id = mCursor.getInt(0);
+          try {
+        	  start_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(1));
+        	  end_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(2));
+          } catch (Exception ex) {
+        	  System.out.println("Error while parsing dates: " + ex.getMessage());
+          }
+          
+      } else {
+    	  initializeBudget();
+      }
+    	
+    	return true;
+    }
+    
+    public boolean initializeBudget() throws SQLException {
+    	Pair<String, String> currentMonth = getDateRange();
+    	ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_START_DATE, currentMonth.first);
+        initialValues.put(KEY_END_DATE, currentMonth.second);
+        db.exec.insert(DATABASE_TABLE, null, initialValues);
+    	
+    	return true;
+    }
+    
+    // Get the first and last of the month that the current budget will live in.
+    public Pair<String, String> getDateRange() {
+        String beginning, end;
 
-   //---updates a contact---
-   public boolean updateBudget(long rowId, Date startDate, Date endDate) 
-   {
-       ContentValues args = new ContentValues();
-       args.put(KEY_START_DATE, formatDate(startDate));
-       args.put(KEY_END_DATE, formatDate(endDate));
-       return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
-   }
+        {
+        	Calendar calendar = Calendar.getInstance();
+        	
+            calendar.set(Calendar.DAY_OF_MONTH, 1);   
 
-   
-   
-   
-   
+            beginning = new SimpleDateFormat("yyy-MM-dd").format(calendar.getTime()); 
+        }
+
+        {
+        	Calendar calendar = Calendar.getInstance();
+
+            calendar.add(Calendar.MONTH, 1);  
+            calendar.set(Calendar.DAY_OF_MONTH, 1);  
+            calendar.add(Calendar.DATE, -1);  
+
+            end = new SimpleDateFormat("yyy-MM-dd").format(calendar.getTime()); 
+        }
+        
+        return Pair.create(beginning, end);
+    }
 }

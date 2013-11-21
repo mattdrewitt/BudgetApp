@@ -3,6 +3,8 @@ package com.example.budgetapp.databaseclasses;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.budgetapp.MainActivity;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -31,7 +33,7 @@ public class InventoryItem {
             "create table inventory_item (_id integer primary key autoincrement, "
             + "item_id integer not null, "
             + "qoh integer not null, "
-            + "percentage_remaining integer, "
+            + "percent_remaining integer, "
             + "FOREIGN KEY(item_id) REFERENCES item(_id));";
     
     // Constructors
@@ -97,6 +99,10 @@ public class InventoryItem {
 
 	public void setNew_item(boolean new_item) {
 		this.new_item = new_item;
+	}
+	
+	public List<InventoryItem> getItemsList() {
+		return itemsList;
 	}
     
 	//---find an item by upc, or set the item to a new item with this upc
@@ -178,5 +184,25 @@ public class InventoryItem {
         return true;
     }
     
-    
+    public Item getItem() {
+    	Item item;
+    	db.open();
+        Cursor mCursor =
+                db.exec.query(true, DATABASE_TABLE, new String[] {Item.KEY_ROWID, Item.KEY_UPC,
+                Item.KEY_NAME, Item.KEY_QTY_DESIRED, Item.KEY_REFILL_POINT, Item.KEY_PURCHASE_OCCURANCE, Item.KEY_REGULAR_PURCHASE,
+                Item.KEY_SERVICE, Item.KEY_CATEGORY_ID}, Item.KEY_ROWID + "='" + this.item_id + "'", null,
+                null, null, null, null);
+        
+        if (mCursor != null && mCursor.getCount() > 0) {
+            mCursor.moveToFirst();
+            
+            item = new Item(mCursor.getInt(0), mCursor.getString(1), mCursor.getString(2), mCursor.getInt(3), 
+					mCursor.getInt(4), mCursor.getString(5), mCursor.getInt(6) == 1 ? true : false, 
+					mCursor.getInt(7) == 1 ? true : false, mCursor.getInt(8));
+        } else {
+        	item = new Item(MainActivity.db);
+        }
+
+        return item;
+    }
 }

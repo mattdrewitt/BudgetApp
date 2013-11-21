@@ -62,6 +62,10 @@
             android:name="com.example.budgetapp.EditCategoriesActivity"
             android:label="@string/title_activity_edit_categories" >
         </activity>
+        <activity
+            android:name="com.example.budgetapp.ViewInventoryActivity"
+            android:label="@string/title_activity_view_inventory" >
+        </activity>
     </application>
 
 </manifest>

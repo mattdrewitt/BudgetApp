@@ -9,6 +9,7 @@ import com.example.budgetapp.databaseclasses.Item;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -77,6 +78,11 @@ public class AddInventoryActivity extends Activity {
 		checkService = (CheckBox)findViewById(R.id.checkService);
 		seekBarRefillPoint = (SeekBar)findViewById(R.id.seekBarRefillPoint);
 		textViewRefill = (TextView)findViewById(R.id.textViewRefill);
+		
+		//Set num fields to nums only
+		editCost.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		editQty.setInputType(InputType.TYPE_CLASS_NUMBER);
+		editQtyDesired.setInputType(InputType.TYPE_CLASS_NUMBER);
 		
 		// Populate Category List
 		initializeCategoryList();
@@ -172,21 +178,26 @@ public class AddInventoryActivity extends Activity {
 			dbItem.setUpc(editUpc.getText().toString());
 			dbItem.setName(editName.getText().toString());
 			dbItem.setQty_desired(Integer.parseInt(editQtyDesired.getText().toString()));
-			dbItem.setPurchase_occurance(spinnerPurchaseOccurance.getSelectedItem().toString());
 			dbItem.setRefill_point(seekBarRefillPoint.getProgress());
 			dbItem.setService_non_inventory(checkService.isChecked());
-			dbItem.setRegular_purchase(checkRegular.isChecked());
 			dbItem.setCategory_id(categoryArray[spinnerCategory.getSelectedItemPosition()-1].getId());
+			
+			dbItem.setRegular_purchase(checkRegular.isChecked());
+			if(checkRegular.isChecked()) {
+				dbItem.setPurchase_occurance(spinnerPurchaseOccurance.getSelectedItem().toString());
+			}
 			
 			if(dbItem.saveItem()) {
 				dbInventory.setItem_id(dbItem.getId());
 				dbInventory.setPercent_remaining(100);
 				dbInventory.setQoh(Integer.parseInt(editQty.getText().toString()));
 				
+				
 				if(dbInventory.saveItem()) {
-					
+					Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+					onBackPressed();
 				}
-				Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+				
 			}
 		}
 	}

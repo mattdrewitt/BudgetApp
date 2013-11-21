@@ -6,15 +6,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
+import com.example.budgetapp.databaseclasses.Budget;
 import com.example.budgetapp.databaseclasses.DBAdapter;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	public static DBAdapter db;
@@ -22,27 +26,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//this.deleteDatabase("MyDB");
+		
 		db = new DBAdapter(this);
 		
-//		try {
-//            String destPath = "/data/data/" + getPackageName() +
-//                "/databases";
-//            File f = new File(destPath);
-//            if (!f.exists()) {            	
-//            	f.mkdirs();
-//                f.createNewFile();
-//            	
-//            	//---copy the db from the assets folder into 
-//            	// the databases folder---
-//                CopyDB(getBaseContext().getAssets().open("mydb"),
-//                    new FileOutputStream(destPath + "/MyDB"));
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+		Budget dbBudget = new Budget(db);
+		
+		// if there is no current budget then create one
+		dbBudget.getCurrentBudget();
 	}
 
 	public void CopyDB(InputStream inputStream, 
