@@ -112,7 +112,7 @@ public class EditCategoriesActivity extends Activity {
 	}
 	
 	public void onClickSave(View v) {
-		if(!editCategoryName.getText().equals("") && !editCategoryDescription.getText().equals("")) {
+		if(!editCategoryName.getText().toString().equals("") && !editCategoryDescription.getText().toString().equals("")) {
 			dbCategory.setTitle(editCategoryName.getText().toString());
 			dbCategory.setDescription(editCategoryDescription.getText().toString());
 			
@@ -125,6 +125,15 @@ public class EditCategoriesActivity extends Activity {
 				initializeCategoryList();
 				spinnerExistingCategories.setSelection(spinnerList.indexOf(dbCategory.getTitle()));
 			}
+		} else {
+			String errors = "Please fill in the following fields:\n";
+			if(editCategoryName.getText().toString().equals("")) {
+				errors += "- Name\n";
+			}
+			if(editCategoryDescription.getText().toString().equals("")) {
+				errors += "- Description\n";
+			}
+			Toast.makeText(this, errors, Toast.LENGTH_LONG).show();
 		}
 	}
 	

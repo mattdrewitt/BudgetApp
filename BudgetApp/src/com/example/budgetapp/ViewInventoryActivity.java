@@ -27,7 +27,7 @@ public class ViewInventoryActivity extends Activity {
 		if(dbInventory.getAllInventory()) {
 			List<String> inventoryList = new ArrayList<String>();
 			for(InventoryItem i : dbInventory.getItemsList()) {
-				inventoryList.add(i.getItem().getName());
+				inventoryList.add(i.getItem().getName() + "\nQty: " + String.valueOf(i.getQoh()) + " Remaining: " + String.valueOf(i.getPercent_remaining()));
 			}
 			String[] item_list = inventoryList.toArray( new String[ inventoryList.size() ] );
 			
