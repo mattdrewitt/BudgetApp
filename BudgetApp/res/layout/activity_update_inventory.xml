@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onClickBack"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -37,26 +36,54 @@
             android:id="@+id/spinnerUpdateCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        
-        <EditText
-            android:id="@+id/editDesiredQty"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:ems="10"
-            android:hint="Desired Quantity" />
-      
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="Desired Qty:"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editDesiredQty"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight=".5"
+                android:ems="10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="Remaining Qty:"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/editQtyRemaining"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_weight=".5"
+                android:ems="10" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/textViewRemaining"
             android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:text="Quantity Remaining: " />
-        
-        <EditText
-            android:id="@+id/editQtyRemaining"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:ems="10"
-            android:hint="Quantity Remaining" />
+            android:text="Quantity Remaining: %" />
 
         <SeekBar
             android:id="@+id/seekBarQuantity"
@@ -70,29 +97,36 @@
 
             <Button
                 android:id="@+id/btnEmpty"
-                android:layout_width="132dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".5"
                 android:onClick="onClick"
                 android:text="Empty" />
 
             <Button
                 android:id="@+id/btnFill"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight=".5"
                 android:onClick="onClick"
                 android:text="Fill" />
-
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:onClick="onClickSave" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:layout_marginBottom="18dp"
-        android:text="Back" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:onClick="onClickBack"
+            android:text="Back" />
+
+    </LinearLayout>
 
 </RelativeLayout>

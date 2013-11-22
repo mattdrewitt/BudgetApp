@@ -262,7 +262,7 @@ public class AddInventoryActivity extends Activity {
 					
 					if(dbPurchase.saveItem()) {
 						// Yay it worked, go back to the inventory screen!
-						Toast.makeText(this, "Inventory Item Saved Successfuly", Toast.LENGTH_SHORT).show();
+						Toast.makeText(this, "Inventory Item Saved Successfully", Toast.LENGTH_SHORT).show();
 						onBackPressed();
 					} else {
 						Toast.makeText(this, "Purchase failed to save!", Toast.LENGTH_SHORT).show();

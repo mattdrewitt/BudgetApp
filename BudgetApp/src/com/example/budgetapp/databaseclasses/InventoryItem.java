@@ -119,7 +119,7 @@ public class InventoryItem {
             mCursor.moveToFirst();
             
             id = mCursor.getInt(0);
-            item_id = mCursor.getInt(1);
+            this.item_id = mCursor.getInt(1);
             qoh = mCursor.getInt(2);
             percent_remaining = mCursor.getInt(3);
             
