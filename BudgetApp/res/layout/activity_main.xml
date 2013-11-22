@@ -64,15 +64,16 @@
                 android:drawableLeft="@drawable/ic_action_storage" />
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btnAbout"
                 android:layout_width="171dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="70dp"
                 android:background="@drawable/white_button"
                 android:drawableLeft="@drawable/ic_action_help"
+                android:gravity="left"
+                android:onClick="onClickBack"
                 android:text="ABOUT"
                 android:textColor="#0794E8"
-                android:gravity="left"
                 android:textSize="25dp" />
 
         </LinearLayout>

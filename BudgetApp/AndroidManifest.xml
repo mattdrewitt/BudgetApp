@@ -66,6 +66,10 @@
             android:name="com.example.budgetapp.ViewInventoryActivity"
             android:label="@string/title_activity_view_inventory" >
         </activity>
+        <activity
+            android:name="com.example.budgetapp.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
     </application>
 
 </manifest>

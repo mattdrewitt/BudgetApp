@@ -71,4 +71,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	public void onClickBack(View v){
+		startActivity(new Intent(this, AboutActivity.class));
+	}
 }
