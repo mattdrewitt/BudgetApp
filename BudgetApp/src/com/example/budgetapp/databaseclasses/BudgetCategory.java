@@ -34,6 +34,7 @@ public class BudgetCategory {
     public BudgetCategory(DBAdapter adapter) {
     	this.db = adapter;
     	this.new_cat = true;
+    	this.categoriesList = new ArrayList<BudgetCategory>();
     }
     
     public BudgetCategory(int i, String t, String d) {
@@ -93,7 +94,7 @@ public class BudgetCategory {
     	    initialValues.put(KEY_DESC, description);
 	        
 	        db.open();
-	        db.exec.insert(DATABASE_TABLE, null, initialValues);
+	        id = (int)db.exec.insert(DATABASE_TABLE, null, initialValues);
 	        db.close();
 	        new_cat = false;
 	        

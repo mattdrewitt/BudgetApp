@@ -132,7 +132,7 @@ public class Budget {
     	ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_START_DATE, currentMonth.first);
         initialValues.put(KEY_END_DATE, currentMonth.second);
-        db.exec.insert(DATABASE_TABLE, null, initialValues);
+        id = (int)db.exec.insert(DATABASE_TABLE, null, initialValues);
     	
         db.close();
         

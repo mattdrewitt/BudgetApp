@@ -1,22 +1,16 @@
 package com.example.budgetapp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 
 import com.example.budgetapp.databaseclasses.Budget;
+import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.DBAdapter;
-import com.example.budgetapp.databaseclasses.InventoryItem;
-import com.example.budgetapp.databaseclasses.Item;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	public static DBAdapter db;
+	BudgetCategory dbCategory;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,6 +26,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		db = new DBAdapter(this);
 		
+		dbCategory = new BudgetCategory(db);
 		Budget dbBudget = new Budget(db);
 		
 		// This will either initialize the budget, or get the current to ensure we have one created
@@ -63,7 +59,12 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this, BudgetActivity.class));
 			break;
 		case R.id.btnInventory:
-			startActivity(new Intent(this, InventoryActivity.class));
+			dbCategory.getAllCategories();
+			if(dbCategory.getCategoriesList().size() > 0) {
+				startActivity(new Intent(this, InventoryActivity.class));
+			} else {
+				Toast.makeText(this, "Please create budget categories before managing inventory!\n(Budget -> Categories)", Toast.LENGTH_LONG).show();
+			}
 			break;
 		case R.id.btnShoppingList:
 			startActivity(new Intent(this, ShoppingListActivity.class));

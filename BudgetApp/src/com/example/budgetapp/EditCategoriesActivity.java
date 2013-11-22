@@ -62,7 +62,7 @@ public class EditCategoriesActivity extends Activity {
 					dbCategory.setDescription(b.getDescription());
 				} else {
 					btnSaveCategory.setText("Add");
-					btnNewCategory.setVisibility(View.GONE);
+					btnNewCategory.setVisibility(View.INVISIBLE);
 					editCategoryName.setText("");
 					editCategoryDescription.setText("");
 					editCategoryName.requestFocus();
@@ -132,7 +132,7 @@ public class EditCategoriesActivity extends Activity {
 		dbCategory = new BudgetCategory(MainActivity.db);
 		clearCategory();
 		btnSaveCategory.setText("Add");
-		btnNewCategory.setVisibility(View.GONE);
+		btnNewCategory.setVisibility(View.INVISIBLE);
 		spinnerExistingCategories.setSelection(0);
 		editCategoryName.requestFocus();
 	}

@@ -59,14 +59,6 @@
                 android:ems="10"
                 android:hint="Quantity Purchased" />
 
-            <EditText
-                android:id="@+id/editQtyDesired"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Quantity Desired"
-                android:visibility="gone" />
-
             <CheckBox
                 android:id="@+id/checkRegular"
                 android:layout_width="wrap_content"
@@ -79,16 +71,26 @@
                 android:layout_height="wrap_content"
                 android:text="Service/Non-Inventory" />
 
+            <EditText
+                android:id="@+id/editQtyDesired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Quantity Desired"
+                android:visibility="gone" />
+            
             <TextView
                 android:id="@+id/textViewRefill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Refill point %" />
+                android:text="Refill point %"
+                android:visibility="gone" />
 
             <SeekBar
                 android:id="@+id/seekBarRefillPoint"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <Spinner
                 android:id="@+id/spinnerPurchaseOccurance"

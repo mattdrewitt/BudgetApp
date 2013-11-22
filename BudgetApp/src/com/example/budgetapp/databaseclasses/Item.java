@@ -212,7 +212,7 @@ public class Item {
 	        initialValues.put(KEY_CATEGORY_ID, category_id);
 	        
 	        db.open();
-	        db.exec.insert(DATABASE_TABLE, null, initialValues);
+	        id = (int)db.exec.insert(DATABASE_TABLE, null, initialValues);
 	        db.close();
 	        new_item = false;
 	        

@@ -141,7 +141,7 @@ public class InventoryItem {
     		initialValues.put(KEY_PERCENT_REMAINING, percent_remaining);
 	        
 	        db.open();
-	        db.exec.insert(DATABASE_TABLE, null, initialValues);
+	        id = (int)db.exec.insert(DATABASE_TABLE, null, initialValues);
 	        db.close();
 	        new_item = false;
 	        

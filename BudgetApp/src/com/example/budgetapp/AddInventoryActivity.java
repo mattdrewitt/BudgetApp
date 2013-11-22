@@ -127,12 +127,15 @@ public class AddInventoryActivity extends Activity {
 			public void onCheckedChanged(CompoundButton c, boolean arg1) {
 				if(c.isChecked()) {
 					spinnerPurchaseOccurance.setVisibility(View.VISIBLE);
+					seekBarRefillPoint.setVisibility(View.VISIBLE);
 					editQtyDesired.setVisibility(View.VISIBLE);
+					textViewRefill.setVisibility(View.VISIBLE);
 				} else {
 					spinnerPurchaseOccurance.setVisibility(View.GONE);
+					seekBarRefillPoint.setVisibility(View.GONE);
 					editQtyDesired.setVisibility(View.GONE);
-				}
-					
+					textViewRefill.setVisibility(View.GONE);
+				}	
 			}
 		});
 		
@@ -208,18 +211,18 @@ public class AddInventoryActivity extends Activity {
 	public void onClickSave(View v) {
 		// Save if all the fields are filled out
 		if(!editUpc.getText().toString().equals("") && !editName.getText().toString().equals("") && !editCost.getText().toString().equals("") &&
-			!editQty.getText().toString().equals("") && !editQtyDesired.getText().toString().equals("") &&
+			!editQty.getText().toString().equals("") && (!editQtyDesired.getText().toString().equals("") || !checkRegular.isChecked()) &&
 			spinnerCategory.getSelectedItemPosition() != 0) {
 			
 			dbItem.setUpc(editUpc.getText().toString());
-			dbItem.setName(editName.getText().toString());
-			dbItem.setQty_desired(Integer.parseInt(editQtyDesired.getText().toString()));
-			dbItem.setRefill_point(seekBarRefillPoint.getProgress());
+			dbItem.setName(editName.getText().toString());			
 			dbItem.setService_non_inventory(checkService.isChecked());
 			dbItem.setCategory_id(categoryArray[spinnerCategory.getSelectedItemPosition()-1].getId());
 			
 			dbItem.setRegular_purchase(checkRegular.isChecked());
 			if(checkRegular.isChecked()) {
+				dbItem.setQty_desired(Integer.parseInt(editQtyDesired.getText().toString()));
+				dbItem.setRefill_point(seekBarRefillPoint.getProgress());
 				dbItem.setPurchase_occurance(spinnerPurchaseOccurance.getSelectedItem().toString());
 			}
 			
