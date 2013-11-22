@@ -42,12 +42,13 @@ public class InventoryItem {
     	this.new_item = true;
     }
     
-    public InventoryItem(int id, int item_id, int qoh, int percent_remaining) {
+    public InventoryItem(int id, int item_id, int qoh, int percent_remaining, DBAdapter adapter) {
     	this.id = id;
 		this.item_id = item_id;
 		this.qoh = qoh;
 		this.percent_remaining = percent_remaining;
 		this.new_item = false;
+		this.db = adapter;
 	}
     
 
@@ -172,7 +173,7 @@ public class InventoryItem {
 	        itemsList = new ArrayList<InventoryItem>();
 	        
 			do {
-				InventoryItem i = new InventoryItem(mCursor.getInt(0), mCursor.getInt(1), mCursor.getInt(2), mCursor.getInt(3));
+				InventoryItem i = new InventoryItem(mCursor.getInt(0), mCursor.getInt(1), mCursor.getInt(2), mCursor.getInt(3), this.db);
 				itemsList.add(i);				
 			} while(mCursor.moveToNext());
         } else {
