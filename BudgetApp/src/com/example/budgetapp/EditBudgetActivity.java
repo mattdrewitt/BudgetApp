@@ -105,7 +105,7 @@ public class EditBudgetActivity extends Activity {
 			EditText editAmount = (EditText)l.findViewWithTag("amount");
 			if(!editAmount.getText().toString().equals("")) {
 				amount = Integer.parseInt(editAmount.getText().toString());
-			} else {
+			} else if(!delete) {
 				Toast.makeText(this, "Please ensure all amounts are filled in!", Toast.LENGTH_LONG).show();
 				success = false;
 				break;
@@ -115,7 +115,7 @@ public class EditBudgetActivity extends Activity {
 			Spinner spinnerCategory = (Spinner)l.findViewWithTag("category");
 			if(spinnerCategory.getSelectedItemPosition() != 0) {
 				category_id = categoryArray[spinnerCategory.getSelectedItemPosition()-1].getId();
-			} else {
+			} else if(!delete) {
 				Toast.makeText(this, "Please ensure all categories are chosen!", Toast.LENGTH_LONG).show();
 				success = false;
 				break;
