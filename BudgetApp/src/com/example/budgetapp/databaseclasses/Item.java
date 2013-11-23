@@ -54,6 +54,7 @@ public class Item {
     // Constructor
     public Item(DBAdapter adapter) {
     	this.db = adapter;
+    	itemsList = new ArrayList<Item>();
     	this.new_item = true;
     }
     
@@ -70,7 +71,6 @@ public class Item {
 		this.regular_purchase = regular_purchase;
 		this.service_non_inventory = service_non_inventory;
 		this.category_id = category_id;
-		this.new_item = new_item;
 		this.db = null;
 		this.new_item = false;
 	}

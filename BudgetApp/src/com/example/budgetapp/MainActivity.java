@@ -18,16 +18,18 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	public static DBAdapter db;
+	public static Budget dbBudget;
+	
 	BudgetCategory dbCategory;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// Setup DB stuff
 		db = new DBAdapter(this);
-		
 		dbCategory = new BudgetCategory(db);
-		Budget dbBudget = new Budget(db);
+		dbBudget = new Budget(db);
 		
 		// This will either initialize the budget, or get the current to ensure we have one created
 		dbBudget.getCurrentBudget();
