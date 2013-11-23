@@ -17,14 +17,15 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
 
-public class ShoppingListActivity extends Activity {
-
+public class ShoppingListActivity extends Activity{
+	private static boolean justCreated; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shopping_list);
 		
 		Spinner purchaseOccuranceSp =  (Spinner)findViewById(R.id.spinnerShopping);
+		justCreated = true;
 		purchaseOccuranceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
@@ -33,7 +34,14 @@ public class ShoppingListActivity extends Activity {
 				//When an item is selected we want to pull items from the DB that have 
 				//this selection. 
 				 String item = parent.getItemAtPosition(position).toString();
-				 setupListView();
+				 if(justCreated){
+					 
+					 justCreated = false;
+				 }
+				 else{
+					 setupListView();
+				 }
+
 				
 			}
 
@@ -43,6 +51,7 @@ public class ShoppingListActivity extends Activity {
 			}
 			
 		});
+		
 		
 
 		
@@ -62,10 +71,6 @@ public class ShoppingListActivity extends Activity {
 		testingList.put("Item2", items);
 		testingList.put("Item3", items);
 		
-		//now we have a fake list so we can dyamically generate expandable listviews for each 
-		for(int i = 0; i < testingList.size(); i++){
-			
-		}
 		
 	}
 	
