@@ -22,6 +22,7 @@ public class EditCategoriesActivity extends Activity {
 	Spinner spinnerExistingCategories;
 	Button btnNewCategory;
 	Button btnSaveCategory;
+	Button btnUpdateCategory;
 	EditText editCategoryName;
 	EditText editCategoryDescription;
 	
@@ -39,6 +40,7 @@ public class EditCategoriesActivity extends Activity {
 		spinnerExistingCategories = (Spinner)findViewById(R.id.spinnerExistingCategories);
 		btnNewCategory = (Button)findViewById(R.id.btnNewCategory);
 		btnSaveCategory = (Button)findViewById(R.id.btnSaveCategory);
+		btnUpdateCategory = (Button)findViewById(R.id.btnUpdateCategory);
 		editCategoryName = (EditText)findViewById(R.id.editCategoryName);
 		editCategoryDescription = (EditText)findViewById(R.id.editCategoryDescription);
 		
@@ -53,16 +55,12 @@ public class EditCategoriesActivity extends Activity {
 					BudgetCategory b = categoryArray[pos-1];
 					editCategoryName.setText(b.getTitle());
 					editCategoryDescription.setText(b.getDescription());
-					btnSaveCategory.setText("Update");
-					btnNewCategory.setVisibility(View.VISIBLE);
-					
 					dbCategory.setNew_cat(false);
 					dbCategory.setId(b.getId());
 					dbCategory.setTitle(b.getTitle());
 					dbCategory.setDescription(b.getDescription());
+					
 				} else {
-					btnSaveCategory.setText("Add");
-					btnNewCategory.setVisibility(View.INVISIBLE);
 					editCategoryName.setText("");
 					editCategoryDescription.setText("");
 					editCategoryName.requestFocus();
@@ -118,12 +116,12 @@ public class EditCategoriesActivity extends Activity {
 			
 			if(dbCategory.saveCategory()) {
 				Toast.makeText(this, "Category Saved Successfuly", Toast.LENGTH_SHORT).show();
-				btnSaveCategory.setText("Update");
-				btnNewCategory.setVisibility(View.VISIBLE);
-				dbCategory.setNew_cat(false);
 				
+				btnNewCategory.setVisibility(View.VISIBLE);
+				dbCategory.setNew_cat(false);	
 				initializeCategoryList();
 				spinnerExistingCategories.setSelection(spinnerList.indexOf(dbCategory.getTitle()));
+				onSaveSuccess();
 			}
 		} else {
 			String errors = "Please fill in the following fields:\n";
@@ -137,13 +135,37 @@ public class EditCategoriesActivity extends Activity {
 		}
 	}
 	
+	
+	public void onSaveSuccess(){
+		spinnerExistingCategories.setVisibility(View.GONE);
+		editCategoryName.setText("");
+		editCategoryDescription.setText("");
+		editCategoryName.setEnabled(false);
+		editCategoryDescription.setEnabled(false);
+		btnSaveCategory.setVisibility(View.GONE);
+	}
+	
 	public void onClickNew(View v) {
 		dbCategory = new BudgetCategory(MainActivity.db);
 		clearCategory();
-		btnSaveCategory.setText("Add");
-		btnNewCategory.setVisibility(View.INVISIBLE);
-		spinnerExistingCategories.setSelection(0);
+		btnSaveCategory.setVisibility(View.VISIBLE);
+		editCategoryName.setText("");
+		editCategoryDescription.setText("");
+		editCategoryName.setEnabled(true);
+		editCategoryDescription.setEnabled(true);
+		spinnerExistingCategories.setVisibility(View.GONE);
 		editCategoryName.requestFocus();
 	}
 
+	
+	public void onClickUpdate(View v){
+		btnSaveCategory.setVisibility(View.VISIBLE);
+		btnUpdateCategory.setEnabled(false);
+		editCategoryName.setEnabled(true);
+		editCategoryDescription.setEnabled(true);
+		spinnerExistingCategories.setVisibility(View.VISIBLE);
+		spinnerExistingCategories.setSelection(0);
+		
+	}
+	
 }
