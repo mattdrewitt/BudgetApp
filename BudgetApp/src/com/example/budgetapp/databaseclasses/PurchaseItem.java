@@ -1,10 +1,13 @@
 package com.example.budgetapp.databaseclasses;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import com.example.budgetapp.MainActivity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 public class PurchaseItem {
 	private int id;
@@ -100,4 +103,30 @@ public class PurchaseItem {
         
         return true;
     }
+	
+	public double getSpendingForCategory(int budget_id, int category_id) {
+		double total_spent = 0.0;
+		
+		db.open();
+		String query = "SELECT " + DATABASE_TABLE + "." + KEY_COST_PER + ", " + DATABASE_TABLE + "." + KEY_QTY_PURCHASED + " " +
+				"FROM " + DATABASE_TABLE + " INNER JOIN " + Item.DATABASE_TABLE + " " +
+				"ON " + DATABASE_TABLE + "." + KEY_ITEM_ID + "=" + Item.DATABASE_TABLE + "." + Item.KEY_ROWID + " " +
+				"WHERE " + DATABASE_TABLE + "." + KEY_BUDGET_ID + "=" + budget_id + " AND " +
+				Item.DATABASE_TABLE + "." + Item.KEY_CATEGORY_ID + "=" + category_id;
+		
+		Cursor mCursor = db.exec.rawQuery(query, null);
+		
+        if (mCursor != null && mCursor.getCount() > 0) {
+        	mCursor.moveToFirst();
+	        	        
+			do {
+				total_spent += mCursor.getDouble(0) * mCursor.getInt(1);
+			} while(mCursor.moveToNext());
+        } else {
+        	return 0.0;
+        }
+        db.close();
+        
+		return total_spent;
+	}
 }

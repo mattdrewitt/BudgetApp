@@ -14,118 +14,132 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/editUPC"
-            android:layout_width="273dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="UPC #" >
-            
-            <requestFocus />
-        </EditText>
-            
-
-        <EditText
-            android:id="@+id/editUpdateName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name" />
-
-        <Spinner
-            android:id="@+id/spinnerUpdateCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="Desired Qty:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editDesiredQty"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight=".5"
-                android:ems="10" />
+                <EditText
+                    android:id="@+id/editUPC"
+                    android:layout_width="273dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="UPC #" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/editUpdateName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Name" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                <Spinner
+                    android:id="@+id/spinnerUpdateCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:text="Remaining Qty:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/editQtyRemaining"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight=".5"
-                android:ems="10" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Desired Qty:"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        </LinearLayout>
+                    <EditText
+                        android:id="@+id/editDesiredQty"
+                        android:layout_width="0dp"
+                        android:layout_height="54dp"
+                        android:layout_weight=".5"
+                        android:ems="10" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewRemaining"
-            android:layout_width="match_parent"
-            android:layout_height="31dp"
-            android:text="Quantity Remaining: %" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-        <SeekBar
-            android:id="@+id/seekBarQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:text="Remaining Qty:"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+                    <EditText
+                        android:id="@+id/editQtyRemaining"
+                        android:layout_width="0dp"
+                        android:layout_height="54dp"
+                        android:layout_weight=".5"
+                        android:ems="10" />
+                </LinearLayout>
 
-            <Button
-                android:id="@+id/btnEmpty"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:onClick="onClick"
-                android:text="Empty" />
+                <TextView
+                    android:id="@+id/textViewRemaining"
+                    android:layout_width="match_parent"
+                    android:layout_height="31dp"
+                    android:text="Quantity Remaining: %" />
 
-            <Button
-                android:id="@+id/btnFill"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:onClick="onClick"
-                android:text="Fill" />
-        </LinearLayout>
+                <SeekBar
+                    android:id="@+id/seekBarQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="100" />
 
-        <Button
-            android:id="@+id/btnUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:onClick="onClickSave" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:onClick="onClickBack"
-            android:text="Back" />
+                    <Button
+                        android:id="@+id/btnEmpty"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:onClick="onClick"
+                        android:text="Empty" />
+
+                    <Button
+                        android:id="@+id/btnFill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:onClick="onClick"
+                        android:text="Fill" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="onClickSave"
+                    android:text="Update" />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp"
+                    android:layout_gravity="right"
+                    android:onClick="onClickBack"
+                    android:text="BACK TO MAIN"
+		            android:textColor="#0794E8"
+		            android:textSize="20dp"
+		            android:textStyle="bold"
+		            android:background="@drawable/white_button"
+		            android:drawableLeft="@drawable/ic_action_backspace" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 

@@ -81,6 +81,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/linearLayout1"
         android:onClick="onClickBack"
-        android:text="Back" />
+        android:text="BACK TO MAIN"
+        android:textColor="#0794E8"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/white_button"
+        android:drawableLeft="@drawable/ic_action_backspace" />
 
 </RelativeLayout>

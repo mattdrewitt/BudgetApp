@@ -9,22 +9,43 @@
     tools:context=".ViewInventoryActivity" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <ListView
-            android:id="@+id/listInventoryItems"
+        <ScrollView
+            android:id="@+id/scrollView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp" >
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
 
+                <ListView
+                    android:id="@+id/listInventoryItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="365dp" >
+                </ListView>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:onClick="onClickBack"
+        android:text="BACK TO MAIN"
+        android:textColor="#0794E8"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/white_button"
+        android:drawableLeft="@drawable/ic_action_backspace" />
 
 </RelativeLayout>

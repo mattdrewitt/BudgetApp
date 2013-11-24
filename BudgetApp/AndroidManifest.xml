@@ -23,20 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.budgetapp.ScannerActivity"
-            android:label="@string/title_activity_scanner" >
-        </activity>
-        <activity
             android:name="com.example.budgetapp.InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
         <activity
             android:name="com.example.budgetapp.BudgetActivity"
             android:label="@string/title_activity_budget" >
-        </activity>
-        <activity
-            android:name="com.example.budgetapp.AddCategoryActivity"
-            android:label="@string/title_activity_add_category" >
         </activity>
         <activity
             android:name="com.example.budgetapp.AddInventoryActivity"

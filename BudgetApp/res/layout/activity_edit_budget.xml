@@ -12,7 +12,7 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp" >
+        android:layout_marginBottom="100dp" >
 
         <LinearLayout
             android:id="@+id/scrollLayout"
@@ -25,23 +25,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true" >
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
             android:onClick="onClickAdd"
             android:text="Add" />
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
             android:onClick="onClickBack"
-            android:text="Back" />
+            android:layout_gravity="right"
+            android:text="BACK TO MAIN"
+            android:textColor="#0794E8"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:background="@drawable/white_button"
+            android:drawableLeft="@drawable/ic_action_backspace" />
     </LinearLayout>
 
 </RelativeLayout>
