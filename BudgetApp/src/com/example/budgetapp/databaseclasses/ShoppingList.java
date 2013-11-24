@@ -71,7 +71,7 @@ regularPurchase = true)
        	      "System.Data.SqlClient")); 
        	DbCommand command = query.BuildCommand();
         */
-    	
+    	return true;
     }
 	
 	
