@@ -5,6 +5,8 @@ package com.example.budgetapp;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.example.budgetapp.databaseclasses.ShoppingList;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
@@ -23,9 +26,16 @@ public class ShoppingListActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shopping_list);
+
+		
+		
 		
 		Spinner purchaseOccuranceSp =  (Spinner)findViewById(R.id.spinnerShopping);
-		justCreated = true;
+	    //ArrayAdapter<String> mAdapter;
+	    //mAdapter= new ArrayAdapter<String>(this, R.layout.spinner_item, R.array.purchaseOccurance );
+	    //purchaseOccuranceSp.setAdapter(mAdapter);
+		
+		
 		purchaseOccuranceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
@@ -34,13 +44,7 @@ public class ShoppingListActivity extends Activity{
 				//When an item is selected we want to pull items from the DB that have 
 				//this selection. 
 				 String item = parent.getItemAtPosition(position).toString();
-				 if(justCreated){
-					 
-					 justCreated = false;
-				 }
-				 else{
-					 setupListView();
-				 }
+				 setupListView(item);
 
 				
 			}
@@ -61,33 +65,38 @@ public class ShoppingListActivity extends Activity{
     private ArrayList<String> parentItems = new ArrayList<String>();
     private ArrayList<Object> childItems = new ArrayList<Object>();
     
-	public void generateShoppingList(String item){
-		//make a map up of top values and children 
-		Map<String, ArrayList<String>> testingList = null;
-		ArrayList<String> items = new ArrayList<String>();
-		items.add("QTY: 10");
-		items.add("Cost: $20 per");
-		testingList.put("Item1", items);
-		testingList.put("Item2", items);
-		testingList.put("Item3", items);
-		
-		
-	}
 	
-	public void setupListView(){
+	public void setupListView(String itemSelected){
 		ExpandableListView listview1 = (ExpandableListView)findViewById(R.id.expandableListView1);
+
 		listview1.setDividerHeight(2);
 		listview1.setGroupIndicator(null);
 		listview1.setClickable(true);
 		
-		 // Set the Items of Parent
-        setGroupParents();
-        // Set The Child Data
-        setChildData();
+		parentItems.clear();
+		childItems.clear();
+        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
+        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        listview1.setAdapter(adapter);
+        
+		ShoppingList shop = new ShoppingList(MainActivity.db);
+		ArrayList<ShoppingList> shoppingItems = shop.getShoppingList(itemSelected);
+        //loop through shoppingItems and add names as parent items 
+		//Going to do this for each shoppingList item that we have. 
+        for(ShoppingList item :shoppingItems){	
+        	parentItems.add(item.getItem().getName());
+            ArrayList<String> child = new ArrayList<String>();
+            child.add(item.getItem().getQty_desired() + "");
+            child.add("What Youve got left: " + item.getInv().getQoh());
+            int qtyNeeded = item.getItem().getQty_desired() - item.getInv().getQoh();
+            child.add("What you need: " + qtyNeeded);
+            child.add("Percent Remaining: ");
+            childItems.add(child);
+        }
+
 		
         // Create the Adapter
-        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
-
+        adapter = new MyExpandableAdapter(parentItems, childItems);
         adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
         
         // Set the Adapter to expandableList
@@ -96,57 +105,6 @@ public class ShoppingListActivity extends Activity{
         listview1.setVisibility(View.VISIBLE);
 	}
 
-	
-	 // method to add parent Items
-    public void setGroupParents() 
-    {
-        parentItems.add("Fruits");
-        parentItems.add("Flowers");
-        parentItems.add("Animals");
-        parentItems.add("Birds");
-        
-    }
-    
- // method to set child data of each parent
-    public void setChildData() 
-    {
-
-        // Add Child Items for Fruits
-        ArrayList<String> child = new ArrayList<String>();
-        child.add("Apple");
-        child.add("Mango");
-        child.add("Banana");
-        child.add("Orange");
-        
-        childItems.add(child);
-
-        // Add Child Items for Flowers
-        child = new ArrayList<String>();
-        child.add("Rose");
-        child.add("Lotus");
-        child.add("Jasmine");
-        child.add("Lily");
-        
-        childItems.add(child);
-
-        // Add Child Items for Animals
-        child = new ArrayList<String>();
-        child.add("Lion");
-        child.add("Tiger");
-        child.add("Horse");
-        child.add("Elephant");
-        
-        childItems.add(child);
-
-        // Add Child Items for Birds
-        child = new ArrayList<String>();
-        child.add("Parrot");
-        child.add("Sparrow");
-        child.add("Peacock");
-        child.add("Pigeon");
-        
-        childItems.add(child);
-    }
 
 	
 	

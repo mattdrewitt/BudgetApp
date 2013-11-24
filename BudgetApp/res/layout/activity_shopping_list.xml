@@ -6,30 +6,46 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ShoppingListActivity" >
+    tools:context=".ShoppingListActivity"
+    android:background="#ffffff" >
 
 
-            <LinearLayout
+           <LinearLayout
                 android:id="@+id/linearLayoutScroll"
                 android:layout_width="match_parent"
-                android:layout_height="430dp"
+        		android:layout_height="match_parent"
                 android:orientation="vertical" >
 
-                <Spinner
+               <Spinner
                     android:id="@+id/spinnerShopping"
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/purchaseOccurance" />
+                    android:entries="@array/purchaseOccurance"
+                    android:background="#0794E8" 
+                    android:layout_height="100dp"/>
 
                 <ExpandableListView
                     android:id="@+id/expandableListView1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="34dp" 
-                    android:visibility="gone">
+                    android:layout_marginTop="10dp" >
+
                 </ExpandableListView>
 
             </LinearLayout>
+
+           <Button
+               android:id="@+id/button1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentRight="true"
+               android:background="@drawable/white_button"
+               android:drawableLeft="@drawable/ic_action_backspace"
+               android:onClick="onClickBack"
+               android:text="BACK TO MAIN"
+               android:textColor="#0794E8"
+               android:textSize="20dp"
+               android:textStyle="bold" />
 
 </RelativeLayout>

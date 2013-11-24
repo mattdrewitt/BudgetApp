@@ -10,28 +10,52 @@ import android.widget.TextView;
 public class ShoppingList {
 	
 	//format nicely in here... 
-	ArrayList<ShoppingListItem> shoppingItems;
 	private DBAdapter db;
 	
 
     static final String DATABASE_NAME = "BudgetAppDB";
-    
-	private class ShoppingListItem{
-		private TextView detail;
-		private TextView label;
-	}
-	
-	
+	//inventory_item - key_qoh, key_percent_remaining, item.keyname, item,key_qty_desired, key_refill point, key service
 	private InventoryItem shop_inv; 
 	private Item shop_item;
-	private ArrayList<ShoppingList> shoppingList;
+	
+    public ShoppingList(int key_qoh, int key_percent_remaining, String key_name, int key_qty_desired, int key_refill,
+    		boolean key_service, DBAdapter adapter){
+    	shop_inv = new InventoryItem(db);
+    	shop_item = new Item(db);
+    	shop_inv.setQoh(key_qoh);
+    	shop_inv.setPercent_remaining(key_percent_remaining);
+    	shop_item.setName(key_name);
+    	shop_item.setQty_desired(key_qty_desired);
+    	shop_item.setRefill_point(key_refill);
+        shop_item.setService_non_inventory(key_service);
+        db = adapter;
+    }
+    public ShoppingList(DBAdapter adapter){
+    	this.db = adapter;
+    }
+	
+	public InventoryItem getInv() {
+		return shop_inv;
+	}
+	
+	public Item getItem() {
+		return shop_item;
+	}
+
+	public void setInv(InventoryItem ii) {
+		this.shop_inv = ii;
+	}
+
+	
+
+	
 	//use this list to build array 
 	
     //---retrieves all the items---
-    public boolean getShoppingList()
+    public ArrayList<ShoppingList> getShoppingList(String purchaseOccurance)
     {
+
     	//INVENTORY ITEM 
-       	db.open();
        	String item_table = Item.DATABASE_TABLE;
        	String inventoryitem_table = InventoryItem.DATABASE_TABLE;
        	
@@ -39,39 +63,41 @@ public class ShoppingList {
        	query.setTables(InventoryItem.DATABASE_TABLE + ", " + Item.DATABASE_TABLE);
        	query.setTables(InventoryItem.DATABASE_TABLE + " INNER JOIN " + Item.DATABASE_TABLE
        					+ " ON " + InventoryItem.DATABASE_TABLE + "." + InventoryItem.KEY_ITEM_ID +
-       					" = " + Item.DATABASE_TABLE + ".Id");
-       	String Columns = InventoryItem.KEY_QOH + "." + 
-       					InventoryItem.KEY_PERCENT_REMAINING
-       					+ ", " + Item.DATABASE_TABLE + "." +Item.KEY_NAME 
-       					+ ", " + Item.DATABASE_TABLE + "." + Item.KEY_QTY_DESIRED
-       					+ ", " + Item.DATABASE_TABLE + "." + Item.KEY_REFILL_POINT
-       					+ ", " + Item.DATABASE_TABLE + "." + Item.KEY_SERVICE;
-       					
-       //	query.TopRecords = maxRecords;
-       	/*
-       	 * Where Item.qty * refillPoint/100 < Item.qtyDesired 
-OR
-(purchaseOccurance == 'purchaseOccurance' AND
-regularPurchase = true) 
+       					" = " + Item.DATABASE_TABLE + "._Id");
 
-       	 * */
-       	/*
        	query.appendWhere( inventoryitem_table + "." +
        	 InventoryItem.KEY_QOH + " * " + item_table +
        	 "." + Item.KEY_REFILL_POINT + "/100 < " + 
-       	 item_table + "." + Item.KEY_QTY_DESIRED + " AND "
-       	 +item_table + "." + field2 = ?");
-       	query.query(db.exec, new String[] { "field1" }, "enteredField3 BETWEEN field3 AND field4",
-       	        new String[] { "enteredField1", "enteredField2"}, null, null, null);
-
-       	// or, have a DbCommand object built
-       	// for even more safety against SQL Injection attacks:
-       	query.SetDbProviderFactory(
-       	      DbProviderFactories.GetFactory(
-       	      "System.Data.SqlClient")); 
-       	DbCommand command = query.BuildCommand();
-        */
-    	return true;
+       	 item_table + "." + Item.KEY_QTY_DESIRED + " OR ("
+       	 +item_table + "." + Item.KEY_PURCHASE_OCCURANCE + " = \""+ purchaseOccurance+"\" AND "
+       	 + item_table + "." + Item.KEY_REGULAR_PURCHASE + " = 1)");
+       	 		
+       	//have the query built now just need to query the database.
+        ArrayList<ShoppingList> shoppingList = new ArrayList<ShoppingList>();
+       	try{
+       	db.open();
+       	Cursor mCursor = query.query(db.exec, null, null, null, null, null, null);
+        if (mCursor != null && mCursor.getCount() > 0) {
+        	mCursor.moveToFirst();
+			do {
+				//inventory_item - key_qoh, key_percent_remaining, item.keyname, item,key_qty_desired, key_refill point, key service
+				ShoppingList item = new ShoppingList(mCursor.getInt(2), mCursor.getInt(3), mCursor.getString(6), mCursor.getInt(7),
+													mCursor.getInt(7), mCursor.getInt(11) == 1 ? true : false, db);
+				shoppingList.add(item);				
+			} while(mCursor.moveToNext());
+        } else {
+        	db.close();
+        	
+        	return null;
+        }
+       }
+       	catch(Exception ex){
+            db.close();
+       		System.out.println("Exception thrown: " + ex.getMessage());
+       	}
+       	
+   
+        return shoppingList;
     }
 	
 	
