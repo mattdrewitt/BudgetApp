@@ -104,6 +104,7 @@ public class ShoppingListActivity extends Activity{
         parentItems.add("Flowers");
         parentItems.add("Animals");
         parentItems.add("Birds");
+        
     }
     
  // method to set child data of each parent
