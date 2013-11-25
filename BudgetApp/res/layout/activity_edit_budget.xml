@@ -25,28 +25,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/scrollView1"
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickAdd"
-            android:text="Add" />
-
-        <Button
-            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClickBack"
-            android:layout_gravity="right"
-            android:text="BACK TO MAIN"
+            android:onClick="onClickAdd"
+            android:layout_gravity="center"
+            android:text="Add" 
             android:textColor="#0794E8"
             android:textSize="20dp"
             android:textStyle="bold"
             android:background="@drawable/white_button"
-            android:drawableLeft="@drawable/ic_action_backspace" />
+            android:drawableLeft="@drawable/ic_action_upload"/>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/white_button"
+        android:drawableLeft="@drawable/ic_action_backspace"
+        android:onClick="onClickBack"
+        android:text="BACK TO BUDGET"
+        android:textColor="#0794E8"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

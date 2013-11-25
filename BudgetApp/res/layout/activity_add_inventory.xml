@@ -16,28 +16,23 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="449dp"
-            android:layout_height="751dp"
-            android:layout_marginLeft="19dp"
-            android:layout_marginTop="14dp"
-            android:orientation="vertical" >
-
             <EditText
                 android:id="@+id/editUpc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:hint="UPC #" >
-
+                android:hint="UPC #" 
+                android:textColor="#0794E8">
                 <requestFocus />
+                
             </EditText>
 
             <EditText
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name" />
+                android:hint="Name" 
+                android:textColor="#0794E8"/>
 
             <Spinner
                 android:id="@+id/spinnerCategory"
@@ -49,26 +44,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Cost $" />
+                android:hint="Cost $"
+                android:textColor="#0794E8" />
 
             <EditText
                 android:id="@+id/editQty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Quantity Purchased" />
+                android:hint="Quantity Purchased"
+                android:textColor="#0794E8" />
 
             <CheckBox
                 android:id="@+id/checkRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Regular Purchase" />
+                android:text="Regular Purchase" 
+                android:textColor="#0794E8"/>
 
             <CheckBox
                 android:id="@+id/checkService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Service/Non-Inventory" />
+                android:text="Service/Non-Inventory"
+                android:textColor="#0794E8" />
 
             <EditText
                 android:id="@+id/editQtyDesired"
@@ -76,20 +75,23 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Quantity Desired"
-                android:visibility="gone" />
+                android:visibility="gone" 
+                android:textColor="#0794E8"/>
             
             <TextView
                 android:id="@+id/textViewRefill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Refill point %"
-                android:visibility="gone" />
+                android:visibility="gone" 
+                android:textColor="#0794E8"/>
 
             <SeekBar
                 android:id="@+id/seekBarRefillPoint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="gone" 
+                />
 
             <Spinner
                 android:id="@+id/spinnerPurchaseOccurance"
@@ -98,26 +100,34 @@
                 android:entries="@array/purchaseOccurance"
                 android:visibility="gone" />
 
-            <LinearLayout
+           <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <Button
                     android:id="@+id/btnSaveInventory"
-                    android:layout_width="172dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.70"
                     android:text="Add Item"
-                    android:onClick="onClickSave" />
-
-                <Button
-                    android:id="@+id/btnSaveInventory"
-                    android:layout_width="131dp"
-                    android:layout_height="wrap_content"
-                    android:text="Back" />
-            </LinearLayout>
+                    android:onClick="onClickSave" 
+                    android:textColor="#0794E8"
+               		android:textSize="20dp"
+               	 android:background="@drawable/white_button"/>
 
         </LinearLayout>
     </LinearLayout>
-
+       <Button
+               android:id="@+id/button1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentRight="true"
+               android:background="@drawable/white_button"
+               android:drawableLeft="@drawable/ic_action_backspace"
+               android:onClick="onClickBack"
+               android:text="BACK TO INVENTORY"
+               android:textColor="#0794E8"
+               android:textSize="20dp"
+               android:textStyle="bold" />
 </RelativeLayout>

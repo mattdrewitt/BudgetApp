@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:onClick="onClick"
-                android:text="MANAGE CATEGORIES"
+                android:text="CATEGORIES"
                 android:textColor="#0794E8"
                 android:textSize="30dp"
                 android:textStyle="bold"

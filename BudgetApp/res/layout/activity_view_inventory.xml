@@ -41,7 +41,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/linearLayout1"
         android:onClick="onClickBack"
-        android:text="BACK TO MAIN"
+        android:text="BACK TO INVENTORY"
         android:textColor="#0794E8"
         android:textSize="20dp"
         android:textStyle="bold"
