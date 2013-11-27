@@ -86,31 +86,26 @@ public class ViewBudgetActivity extends Activity {
 			String cat = categoryList.get(categoryIds.indexOf(b.getCategory_id()));
 			double spent = dbPurchase.getSpendingForCategory(MainActivity.dbBudget.getId(), b.getCategory_id());
 			totalBudget += b.getTarget_total();
-			DecimalFormat decim = new DecimalFormat("#.##");
-			Double price1 = Double.parseDouble(decim.format(spent));
-			Double targetTotal = Double.parseDouble(decim.format(b.getTarget_total() ));
+			DecimalFormat decim = new DecimalFormat("$0.00");
+			Double targetTotal = (double)b.getTarget_total();
 			cats += cat + "<br />";
-			amounts += "$" + targetTotal + "<br />";
+			amounts += decim.format(targetTotal) + "<br />";
 			if(spent > 0) {
 				totalSpent += spent;
 				cats += "<br />";
-				amounts += "<font color='#FF0000'>- $" + price1 + "</font><br />";
+				amounts += "<font color='#FF0000'>- " + decim.format(spent) + "</font><br />";
 			}
 		}
-		DecimalFormat decim = new DecimalFormat("#.##");
-		Double priceTotal = Double.parseDouble(decim.format(totalBudget));
-		Double priceSpent = Double.parseDouble(decim.format(totalSpent));
-		sum += "Total Budget:   $" + priceTotal + "<br />";
-		sum += "Total Spent:   <font color='#FF0000'>$" + priceSpent + "</font><br />-----------------------------<br />";
+		DecimalFormat decim = new DecimalFormat("$0.00");
+		sum += "Total Budget:   " + decim.format(totalBudget) + "<br />";
+		sum += "Total Spent:   <font color='#FF0000'>" + decim.format(totalSpent) + "</font><br />-----------------------------<br />";
 		
 		double remaining = totalBudget - (totalSpent * 1.0);
-
-		Double price2 = Double.parseDouble(decim.format(remaining));
 		
 		if (remaining > 0)
-			sum += "Remaining:   <font color='#0794E8'>$" + price2 + "</font>";
+			sum += "Remaining:   <font color='#0794E8'>" + decim.format(remaining) + "</font>";
 		else
-			sum += "Remaining:   <font color='#0794E8'>$" + price2 + "</font>";
+			sum += "Remaining:   <font color='#FF0000'>" + decim.format(remaining) + "</font>";
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("MMMM, yyyy");
 		textRange.setText(formatter.format(MainActivity.dbBudget.getStart_date()));

@@ -148,7 +148,8 @@ public class EditCategoriesActivity extends Activity {
 	public void onClickNew(View v) {
 		dbCategory = new BudgetCategory(MainActivity.db);
 		clearCategory();
-		btnSaveCategory.setVisibility(View.VISIBLE);
+		btnSaveCategory.setVisibility(View.VISIBLE);		
+		btnUpdateCategory.setEnabled(true);
 		editCategoryName.setText("");
 		editCategoryDescription.setText("");
 		editCategoryName.setEnabled(true);
@@ -157,7 +158,7 @@ public class EditCategoriesActivity extends Activity {
 		editCategoryName.requestFocus();
 	}
 
-	
+	// Button click even for showing the update category fields
 	public void onClickUpdate(View v){
 		btnSaveCategory.setVisibility(View.VISIBLE);
 		btnUpdateCategory.setEnabled(false);
@@ -165,6 +166,7 @@ public class EditCategoriesActivity extends Activity {
 		editCategoryDescription.setEnabled(true);
 		spinnerExistingCategories.setVisibility(View.VISIBLE);
 		spinnerExistingCategories.setSelection(0);
+		spinnerExistingCategories.performClick();
 		
 	}
 	
