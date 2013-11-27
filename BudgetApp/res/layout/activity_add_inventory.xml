@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".AddActivity" >
+    tools:context=".AddActivity"
+    android:background="#FFFFFF" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -14,7 +15,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="#FFFFFF" >
 
             <EditText
                 android:id="@+id/editUpc"

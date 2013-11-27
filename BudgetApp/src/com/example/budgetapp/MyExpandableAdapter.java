@@ -53,15 +53,6 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter
         textView = (TextView) convertView.findViewById(R.id.textViewChild);
         textView.setText(child.get(childPosition));
 
-        // set the ClickListener to handle the click event on child item
-        convertView.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(activity, child.get(childPosition),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
         return convertView;
     }
 

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class EditBudgetActivity extends Activity {
 	List<LinearLayout> layouts;
@@ -181,23 +183,10 @@ public class EditBudgetActivity extends Activity {
 		
 		// Set values of displays
 		label.setText("Amount: $");
-		button.setText("Remove");
-		button.setBackgroundResource(R.drawable.blue_button);
+		button.setBackgroundResource(R.drawable.red_button); 
+		button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_cancel, 0, 0, 0);
 		button.setTextColor(Color.WHITE);
-		//button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-		/*
-		 *      android:id="@+id/buttonSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/blue_button"
-                android:drawableLeft="@drawable/ic_action_upload"
-                android:onClick="onClickSubmit"
-                android:text="Submit Budgets"
-                android:textColor="#FFFFFF"
-                android:textSize="18dp"
-                android:textStyle="bold" 
-                android:enabled="false"/>
-		 */
+		button.setWidth(LayoutParams.WRAP_CONTENT);
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
 		spinnerCategory.setAdapter(spinnerArrayAdapter);
 		

@@ -67,7 +67,7 @@ public class ViewInventoryActivity extends Activity {
             	parentItems.add(item.getItem().getName());
                 ArrayList<String> child = new ArrayList<String>();
                 child.add("QTY: " +   String.valueOf(item.getQoh()) );
-                child.add("Remaining: " + String.valueOf(item.getPercent_remaining()));
+                child.add("Remaining: " + String.valueOf(item.getPercent_remaining()) + "%");
                 child.add("UPC: " + String.valueOf(item.getItem().getUpc()));
                 childItems.add(child);
         		

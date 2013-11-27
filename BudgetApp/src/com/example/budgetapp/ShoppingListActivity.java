@@ -54,10 +54,6 @@ public class ShoppingListActivity extends Activity{
 			}
 			
 		});
-		
-		
-
-		
 	}
 	
 	// Create ArrayList to hold parent Items and Child Items
@@ -82,16 +78,20 @@ public class ShoppingListActivity extends Activity{
 		ArrayList<ShoppingList> shoppingItems = shop.getShoppingList(itemSelected);
         //loop through shoppingItems and add names as parent items 
 		//Going to do this for each shoppingList item that we have. 
-        for(ShoppingList item :shoppingItems){	
-        	parentItems.add(item.getItem().getName());
-            ArrayList<String> child = new ArrayList<String>();
-            child.add(item.getItem().getQty_desired() + "");
-            child.add("What Youve got left: " + item.getInv().getQoh());
-            int qtyNeeded = item.getItem().getQty_desired() - item.getInv().getQoh();
-            child.add("What you need: " + qtyNeeded);
-            child.add("Percent Remaining: ");
-            childItems.add(child);
-        }
+		if(shoppingItems != null){
+	        for(ShoppingList item :shoppingItems){	
+	        	parentItems.add(item.getItem().getName());
+	            ArrayList<String> child = new ArrayList<String>();
+	            child.add(item.getItem().getQty_desired() + "");
+	            child.add("What Youve got left: " + item.getInv().getQoh());
+	            int qtyNeeded = item.getItem().getQty_desired() - item.getInv().getQoh();
+	            if(qtyNeeded >= 0){
+	            	child.add("What you need: " + qtyNeeded);
+	            }
+	            child.add("Percent Remaining: " + String.valueOf(item.getInv().getPercent_remaining()) + "%");
+	            childItems.add(child);
+	        }
+		}
 
 		
         // Create the Adapter

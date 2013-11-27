@@ -18,19 +18,19 @@
 
                <Spinner
                     android:id="@+id/spinnerShopping"
-
                     android:layout_width="match_parent"
                     android:entries="@array/purchaseOccurance"
                     android:background="#0794E8" 
-                    android:layout_height="100dp"/>
+                    android:layout_height="80dp"/>
 
                 <ExpandableListView
                     android:id="@+id/expandableListView1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp" >
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="60dp" >
                 </ExpandableListView>
+               
 
             </LinearLayout>
 
