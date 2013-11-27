@@ -14,24 +14,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
-
-                <ListView
-                    android:id="@+id/listInventoryItems"
+                <ExpandableListView
+                    android:id="@+id/expandableListView1"
                     android:layout_width="match_parent"
-                    android:layout_height="365dp" >
-                </ListView>
-            </LinearLayout>
-        </ScrollView>
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp" >
+
+                </ExpandableListView>
     </LinearLayout>
 
     <Button

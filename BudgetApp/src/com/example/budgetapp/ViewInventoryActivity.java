@@ -5,12 +5,16 @@ import java.util.List;
 
 import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.InventoryItem;
+import com.example.budgetapp.databaseclasses.ShoppingList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 public class ViewInventoryActivity extends Activity {
@@ -20,22 +24,8 @@ public class ViewInventoryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_inventory);
 		
-		ListView listInventoryItems = (ListView)findViewById(R.id.listInventoryItems);
-		InventoryItem dbInventory = new InventoryItem(MainActivity.db);
-		
 		// Get the inventory and create a list from all of the titles of the items
-		if(dbInventory.getAllInventory()) {
-			List<String> inventoryList = new ArrayList<String>();
-			for(InventoryItem i : dbInventory.getItemsList()) {
-				inventoryList.add(i.getItem().getName() + "\nQty: " + String.valueOf(i.getQoh()) + 
-						" Remaining: " + String.valueOf(i.getPercent_remaining()) + "\nUPC: " + String.valueOf(i.getItem().getUpc()));
-			}
-			String[] item_list = inventoryList.toArray( new String[ inventoryList.size() ] );
-			
-			ArrayAdapter<String> inventoryAdapter = new ArrayAdapter<String>(
-	                this, android.R.layout.simple_list_item_1, item_list);
-			listInventoryItems.setAdapter(inventoryAdapter);
-		}
+		setupListView();
 		
 	}
 
@@ -49,4 +39,50 @@ public class ViewInventoryActivity extends Activity {
 	public void onClickBack(View v){
 		onBackPressed();
 	}
+	
+	// Create ArrayList to hold parent Items and Child Items
+    private ArrayList<String> parentItems = new ArrayList<String>();
+    private ArrayList<Object> childItems = new ArrayList<Object>();
+    
+	
+	public void setupListView(){
+		ExpandableListView listview1 = (ExpandableListView)findViewById(R.id.expandableListView1);
+
+		listview1.setDividerHeight(2);
+		listview1.setGroupIndicator(null);
+		listview1.setClickable(true);
+		
+		parentItems.clear();
+		childItems.clear();
+        MyExpandableAdapter adapter = new MyExpandableAdapter(parentItems, childItems);
+        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        listview1.setAdapter(adapter);
+        
+        //loop through listInventoryItems and add names as parent items 
+		//Going to do this for each shoppingList item that we have. 
+		InventoryItem dbInventory = new InventoryItem(MainActivity.db);
+
+        if(dbInventory.getAllInventory()) {
+        	for(InventoryItem item : dbInventory.getItemsList()) { 		
+            	parentItems.add(item.getItem().getName());
+                ArrayList<String> child = new ArrayList<String>();
+                child.add("QTY: " +   String.valueOf(item.getQoh()) );
+                child.add("Remaining: " + String.valueOf(item.getPercent_remaining()));
+                child.add("UPC: " + String.valueOf(item.getItem().getUpc()));
+                childItems.add(child);
+        		
+        	}
+		}
+        
+        // Create the Adapter
+        adapter = new MyExpandableAdapter(parentItems, childItems);
+        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+        
+        // Set the Adapter to expandableList
+        listview1.setAdapter(adapter);
+        //listview1.setOnChildClickListener((OnChildClickListener) this);
+        listview1.setVisibility(View.VISIBLE);
+	}
+	
+	
 }

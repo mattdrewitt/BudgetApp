@@ -45,7 +45,6 @@ public class ShoppingListActivity extends Activity{
 				//this selection. 
 				 String item = parent.getItemAtPosition(position).toString();
 				 setupListView(item);
-
 				
 			}
 

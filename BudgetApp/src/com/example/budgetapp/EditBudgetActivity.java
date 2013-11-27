@@ -3,6 +3,7 @@ package com.example.budgetapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.budgetapp.R.drawable;
 import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.BudgetItem;
 
@@ -11,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,7 +86,12 @@ public class EditBudgetActivity extends Activity {
 		return true;
 	}
 	
-	public void onClickBack(View v) {
+	
+	public void onClickBack(View v){	
+		onBackPressed();
+	}
+	
+	public void onClickSubmit(View v) {
 		boolean success = true;
 		for(LinearLayout l : layouts) {
 			int id = 0;
@@ -143,6 +150,8 @@ public class EditBudgetActivity extends Activity {
 	
 	public void onClickAdd(View v) {
 		addBudgetItem(0,0,0);
+		Button submit = (Button)findViewById(R.id.buttonSubmit);
+
 	}
 	
 	public void addBudgetItem(int id, int amount, int category) {
@@ -165,14 +174,30 @@ public class EditBudgetActivity extends Activity {
 		label.setLayoutParams(new TableLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.8f));
 		editAmount.setLayoutParams(new TableLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.35f));
 		editAmount.setInputType(InputType.TYPE_CLASS_NUMBER);
-		button.setLayoutParams(new TableLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.85f));
+		button.setLayoutParams(new TableLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 0.90f));
 		line.setBackgroundColor(Color.BLACK);
 		line.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.MATCH_PARENT, 2));
 		editId.setVisibility(View.GONE);
 		
 		// Set values of displays
 		label.setText("Amount: $");
-		button.setText("×");
+		button.setText("Remove");
+		button.setBackgroundResource(R.drawable.blue_button);
+		button.setTextColor(Color.WHITE);
+		//button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+		/*
+		 *      android:id="@+id/buttonSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_button"
+                android:drawableLeft="@drawable/ic_action_upload"
+                android:onClick="onClickSubmit"
+                android:text="Submit Budgets"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:textStyle="bold" 
+                android:enabled="false"/>
+		 */
 		ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
 		spinnerCategory.setAdapter(spinnerArrayAdapter);
 		
