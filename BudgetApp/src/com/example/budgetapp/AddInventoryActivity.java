@@ -208,6 +208,8 @@ public class AddInventoryActivity extends Activity {
 		onBackPressed();
 	}
 	
+	// Gather all the values from the views, or output an error message of what is missing.
+	// If all values are gathered they will then update/insert the values
 	public void onClickSave(View v) {
 		// Save if all the fields are filled out
 		if(!editUpc.getText().toString().equals("") && !editName.getText().toString().equals("") && !editCost.getText().toString().equals("") &&

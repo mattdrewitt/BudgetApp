@@ -1,13 +1,9 @@
 package com.example.budgetapp.databaseclasses;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import com.example.budgetapp.MainActivity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQueryBuilder;
 
 public class PurchaseItem {
 	private int id;

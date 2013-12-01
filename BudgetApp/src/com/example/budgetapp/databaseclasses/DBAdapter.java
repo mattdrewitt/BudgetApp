@@ -1,21 +1,12 @@
 package com.example.budgetapp.databaseclasses;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DBAdapter {
-	/*
-    static final String KEY_ROWID = "_id";
-    static final String KEY_NAME = "name";
-    static final String KEY_EMAIL = "email";
-    static final String KEY_AGE = "age";
-    static final String KEY_YEAR = "year";
-    */
     static final String TAG = "DBAdapter";
     static final String DATABASE_NAME = "BudgetAppDB";
     static final int DATABASE_VERSION = 1;

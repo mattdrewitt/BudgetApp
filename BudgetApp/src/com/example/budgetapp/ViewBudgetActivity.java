@@ -12,7 +12,6 @@ import com.example.budgetapp.databaseclasses.PurchaseItem;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Html;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
@@ -74,6 +73,7 @@ public class ViewBudgetActivity extends Activity {
 		onBackPressed();
 	}
 	
+	// Build HTML strings to allow for formatting and color.  Then set these in the textViews for review of the budget. 
 	public void displayBudgetItem() {
 		String cats = "";
 		String amounts = "";

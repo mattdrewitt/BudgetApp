@@ -113,7 +113,7 @@ public class BudgetCategory {
     	}
     }
 
-    //---retrieves all the contacts---
+    //---retrieves all the categories---
     public boolean getAllCategories()
     {
     	db.open();
@@ -135,7 +135,7 @@ public class BudgetCategory {
         return true;
     }
 
-	//---retrieves a particular contact---
+	//---retrieves a particular category---
     public boolean getBudgetCategory(long rowId) throws SQLException 
     {
     	db.open();

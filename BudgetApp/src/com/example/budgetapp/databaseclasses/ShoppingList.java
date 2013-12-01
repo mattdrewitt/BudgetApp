@@ -1,17 +1,12 @@
 package com.example.budgetapp.databaseclasses;
 
-
 import java.util.ArrayList;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.widget.TextView;
 
 public class ShoppingList {
-	
 	//format nicely in here... 
 	private DBAdapter db;
-	
 
     static final String DATABASE_NAME = "BudgetAppDB";
 	//inventory_item - key_qoh, key_percent_remaining, item.keyname, item,key_qty_desired, key_refill point, key service
@@ -46,9 +41,6 @@ public class ShoppingList {
 		this.shop_inv = ii;
 	}
 
-	
-
-	
 	//use this list to build array 
 	
     //---retrieves all the items---
@@ -99,10 +91,4 @@ public class ShoppingList {
    
         return shoppingList;
     }
-	
-	
-	
-	
-	
-	
 }

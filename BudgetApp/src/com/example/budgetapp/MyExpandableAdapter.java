@@ -18,7 +18,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter
 {
 
     private Activity activity;
-    private ArrayList<Object> childtems;
+    private ArrayList<Object> childItems;
     private LayoutInflater inflater;
     private ArrayList<String> parentItems, child;
 
@@ -26,7 +26,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter
     public MyExpandableAdapter(ArrayList<String> parents, ArrayList<Object> childern)
     {
         this.parentItems = parents;
-        this.childtems = childern;
+        this.childItems = childern;
     }
 
     public void setInflater(LayoutInflater inflater, Activity activity) 
@@ -41,7 +41,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) 
     {
 
-        child = (ArrayList<String>) childtems.get(groupPosition);
+        child = (ArrayList<String>) childItems.get(groupPosition);
 
         TextView textView = null;
 
@@ -87,7 +87,7 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter
     @Override
     public int getChildrenCount(int groupPosition) 
     {
-        return ((ArrayList<String>) childtems.get(groupPosition)).size();
+        return ((ArrayList<String>) childItems.get(groupPosition)).size();
     }
 
     @Override

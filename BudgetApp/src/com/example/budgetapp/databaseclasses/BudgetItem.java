@@ -97,6 +97,7 @@ public class BudgetItem {
 		return new_item;
 	}
 
+	// Update/Insert budget item depending on if it is new or not
 	public boolean saveItem()
     {
     	if(new_item == true) {
@@ -151,7 +152,7 @@ public class BudgetItem {
         return true;
     }
 
-    //---deletes a particular contact---
+    //---deletes a particular budget item---
     public boolean deleteItem(int rowId) 
     {
     	db.open();
@@ -160,7 +161,7 @@ public class BudgetItem {
         return result;
     }
 
-    //---retrieves all the contacts---
+    //---retrieves all the budget items---
     public boolean getAllItemsByBudget(int budget)
     {
     	db.open();

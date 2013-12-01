@@ -174,6 +174,7 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 		return true;
 	}
 	
+	// Fill all view objects with the appropriate data
 	public void displayItem() {
 		editUpc.setText(dbItem.getUpc());
 		editName.setText(dbItem.getName());
@@ -190,6 +191,7 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 		seekBarQuantity.setProgress(dbInventory.getPercent_remaining());
 	}
 	
+	// Fill the category list for use with the spinner in the layout
 	public void initializeCategoryList() {
 		if (dbCategory.getAllCategories()) {
 			categoryArray = dbCategory.getCategoriesList().toArray( new BudgetCategory[ dbCategory.getCategoriesList().size() ] );
@@ -205,6 +207,7 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 		}
 	}
 	
+	// Calculate what percent of the desired quantity is set
 	public void calcPercent() {
 		int percent; 
 		double desired, remaining;
@@ -219,6 +222,7 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 		seekBarQuantity.setProgress(percent);
 	}
 	
+	// Calculate how much would be remaining of the desired qty at a certain percent
 	public void calcRemaining(int progress) {
 		double percent, desired, remaining;
 		
@@ -235,7 +239,9 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 			seekBarQuantity.setProgress(100);
 		}
 	}
-
+	
+	// Button click handlers
+	
 	@Override
 	public void onClick(View v) {
 		SeekBar seekQty = (SeekBar)findViewById(R.id.seekBarQuantity);
@@ -254,6 +260,8 @@ public class UpdateInventoryActivity extends Activity implements OnClickListener
 		onBackPressed();
 	}
 	
+	// Gather all the values from the views, or output an error message of what is missing.
+	// If all values are gathered they will then update/insert the values
 	public void onClickSave(View v) {
 		if(!editUpc.getText().toString().equals("") && !editName.getText().toString().equals("") &&
 			spinnerUpdateCategory.getSelectedItemPosition() != 0 && !editDesiredQty.getText().toString().equals("") &&

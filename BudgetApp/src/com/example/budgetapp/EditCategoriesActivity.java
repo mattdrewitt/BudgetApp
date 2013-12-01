@@ -7,7 +7,6 @@ import com.example.budgetapp.databaseclasses.BudgetCategory;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.database.Cursor;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;

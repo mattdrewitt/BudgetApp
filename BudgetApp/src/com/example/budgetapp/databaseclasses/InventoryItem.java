@@ -185,6 +185,7 @@ public class InventoryItem {
         return true;
     }
     
+    // Get the details about the item
     public Item getItem() {
     	Item item;
     	db.open();

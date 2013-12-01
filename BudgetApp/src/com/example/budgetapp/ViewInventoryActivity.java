@@ -1,11 +1,8 @@
 package com.example.budgetapp;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.InventoryItem;
-import com.example.budgetapp.databaseclasses.ShoppingList;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,9 +10,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 public class ViewInventoryActivity extends Activity {
 

@@ -14,27 +14,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Spinner;
 
 public class ShoppingListActivity extends Activity{
-	private static boolean justCreated; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shopping_list);
-
 		
-		
-		
-		Spinner purchaseOccuranceSp =  (Spinner)findViewById(R.id.spinnerShopping);
-	    //ArrayAdapter<String> mAdapter;
-	    //mAdapter= new ArrayAdapter<String>(this, R.layout.spinner_item, R.array.purchaseOccurance );
-	    //purchaseOccuranceSp.setAdapter(mAdapter);
-		
+		Spinner purchaseOccuranceSp =  (Spinner)findViewById(R.id.spinnerShopping);		
 		
 		purchaseOccuranceSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -100,7 +89,6 @@ public class ShoppingListActivity extends Activity{
         
         // Set the Adapter to expandableList
         listview1.setAdapter(adapter);
-        //listview1.setOnChildClickListener((OnChildClickListener) this);
         listview1.setVisibility(View.VISIBLE);
 	}
 

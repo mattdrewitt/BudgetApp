@@ -3,15 +3,11 @@ package com.example.budgetapp.databaseclasses;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.text.format.DateFormat;
 import android.util.Pair;
 
 
@@ -61,68 +57,47 @@ public class Budget {
 		this.end_date = end_date;
 	}
     
-    
-    private String formatDate(Date d){
-    	TimeZone tz = TimeZone.getTimeZone("UTC");
-    	SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS");
-    	df.setTimeZone(tz);
-    	String nowAsISO = df.format(d);
-    	return nowAsISO;
-    }
-    
     static final String DATABASE_CREATE =
             "create table budget (_id integer primary key autoincrement, "
             + "start_date text, end_date text);";
     
-   //---retrieves all the contacts---
-    public Cursor getAllBudgets()
-    {
-    	return db.exec.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_START_DATE,
-    			KEY_END_DATE}, null, null, null, null, null);
-    }
-
-    //---retrieves a particular contact---
-    public Cursor getBudget(long rowId) throws SQLException {
-    	Cursor mCursor =
-    			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-    					KEY_START_DATE, KEY_END_DATE}, KEY_ROWID + "=" + rowId, null,
-    					null, null, null, null);
-    	if (mCursor != null) {
-    		mCursor.moveToFirst();
-    	}
-    	return mCursor;
-    }
-    
-    public boolean getCurrentBudget() throws SQLException { 	
-    	Pair<String, String> currentMonth = getDateRange();
-    	db.open();
-    	
-    	Cursor mCursor =
-    			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-    					KEY_START_DATE, KEY_END_DATE}, 
-    					KEY_START_DATE + "='" + currentMonth.first + "' AND " + 
-    					KEY_END_DATE + "='" + currentMonth.second + "'", 
-    					null, null, null, null, null);
-    	
-    	if (mCursor != null && mCursor.getCount() > 0) {
-    		mCursor.moveToFirst();
-          
-          	id = mCursor.getInt(0);
-          	try {
-        	  	start_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(1));
-        	  	end_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(2));
-          	} catch (Exception ex) {
-        	  	System.out.println("Error while parsing dates: " + ex.getMessage());
-          	}
-          	
-          	db.close();
-    	} else {
+    public boolean getCurrentBudget() throws SQLException {
+    	try {
+	    	Pair<String, String> currentMonth = getDateRange();
+	    	db.open();
+	    	
+	    	Cursor mCursor =
+	    			db.exec.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
+	    					KEY_START_DATE, KEY_END_DATE}, 
+	    					KEY_START_DATE + "='" + currentMonth.first + "' AND " + 
+	    					KEY_END_DATE + "='" + currentMonth.second + "'", 
+	    					null, null, null, null, null);
+	    	
+	    	if (mCursor != null && mCursor.getCount() > 0) {
+	    		mCursor.moveToFirst();
+	          
+	          	id = mCursor.getInt(0);
+	          	try {
+	        	  	start_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(1));
+	        	  	end_date = new SimpleDateFormat("yyyy-MM-dd").parse(mCursor.getString(2));
+	          	} catch (Exception ex) {
+	        	  	System.out.println("Error while parsing dates: " + ex.getMessage());
+	          	}
+	          	
+	          	db.close();
+	    	} else {
+	    		db.close();
+	    		
+	    	  	initializeBudget();
+	      	}
+	    	
+	    	return true;
+    	} catch( Exception ex) {
     		db.close();
-    		
-    	  	initializeBudget();
-      	}
+	    	System.out.println("Error occured: " + ex.getMessage());
+	    }
     	
-    	return true;
+    	return false;
     }
     
     public boolean initializeBudget() throws SQLException {

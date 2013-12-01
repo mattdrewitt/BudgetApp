@@ -3,7 +3,6 @@ package com.example.budgetapp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.budgetapp.R.drawable;
 import com.example.budgetapp.databaseclasses.BudgetCategory;
 import com.example.budgetapp.databaseclasses.BudgetItem;
 
@@ -11,9 +10,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.text.InputType;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -152,8 +149,6 @@ public class EditBudgetActivity extends Activity {
 	
 	public void onClickAdd(View v) {
 		addBudgetItem(0,0,0);
-		Button submit = (Button)findViewById(R.id.buttonSubmit);
-
 	}
 	
 	public void addBudgetItem(int id, int amount, int category) {
